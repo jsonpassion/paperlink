@@ -15,7 +15,8 @@
 </p>
 
 <p align="center">
-  <img src="assets/screenshot.png" alt="PaperLink Screenshot" width="720">
+  <img src="assets/screenshot-1.png" alt="PaperLink Screenshot 1" width="720"><br>
+  <img src="assets/screenshot-2.png" alt="PaperLink Screenshot 2" width="720">
 </p>
 
 ---
