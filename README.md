@@ -1,4 +1,4 @@
-# Paper Galaxy Template
+# PaperLink
 
 > Turn any collection of research papers into an interactive 3D galaxy visualization.
 
@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Three.js-black?logo=three.js" alt="Three.js">
   <img src="https://img.shields.io/badge/Zero_Dependencies-green" alt="Zero Dependencies">
   <img src="https://img.shields.io/badge/Single_HTML-blue" alt="Single HTML">
-  <img src="https://img.shields.io/github/license/jsonpassion/papergoat-galaxy-template" alt="MIT License">
+  <img src="https://img.shields.io/github/license/jsonpassion/paperlink" alt="MIT License">
 </p>
 
 <p align="center">
@@ -35,7 +35,7 @@
 
 1. **Fork this repository** — Click the "Fork" button above
 2. **Enable GitHub Pages** — Go to Settings > Pages > Source: `main` / `root`
-3. **Done!** — Your galaxy is live at `https://<your-username>.github.io/papergoat-galaxy-template/`
+3. **Done!** — Your galaxy is live at `https://<your-username>.github.io/paperlink/`
 
 The template ships with 20 sample papers. Edit `papers.json` to add your own.
 
@@ -43,8 +43,8 @@ The template ships with 20 sample papers. Edit `papers.json` to add your own.
 
 ```bash
 # Clone
-git clone https://github.com/jsonpassion/papergoat-galaxy-template.git
-cd papergoat-galaxy-template
+git clone https://github.com/jsonpassion/paperlink.git
+cd paperlink
 
 # Copy sample data
 cp papers.sample.json papers.json
@@ -131,18 +131,18 @@ Papers are sized proportionally to their `score` (80–100 range). The default s
 
 | Weight | Criterion | Description |
 |--------|-----------|-------------|
-| 25% | Paradigm Shift | Did it open a new research direction? |
-| 25% | Adoption | Real-world industry usage |
-| 20% | Citation | Downstream research impact |
-| 15% | Novelty | Technical originality |
-| 15% | Timeliness | Current relevance |
+| 30% | Paradigm Shift | Did it open a new research direction? |
+| 25% | Adoption & Industry | Real-world production usage |
+| 20% | Citation & Ecosystem | Downstream research impact |
+| 15% | Technical Novelty | Originality and depth |
+| 10% | Timeliness | Current relevance and trajectory |
 
 ---
 
 ## Project Structure
 
 ```
-papergoat-galaxy-template/
+paperlink/
 ├── index.html              ← Visualization engine (Three.js)
 ├── papers.json             ← Your paper data (gitignored in production)
 ├── papers.sample.json      ← Sample data with 20 mock papers
@@ -172,6 +172,12 @@ These sites are built with the same engine:
 
 - **[PaperGoat Galaxy](https://jsonpassion.github.io/papergoat-galaxy/)** — Top 151 AI papers, curated & ranked
 - **[PaperGoat Apple](https://jsonpassion.github.io/papergoat-apple/)** — Top 100 Apple ML research papers
+
+---
+
+## Contributing
+
+PRs are welcome — bug fixes, new features, UX improvements. Please open an issue first for large changes.
 
 ---
 
