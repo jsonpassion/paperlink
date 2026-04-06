@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eaecf4" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Paper Galaxy — My Research Papers</title>
+<!-- @PG_INLINE_DATA_START -->
+<script id="__pg_inline_data__">window.__PG_DATA__=null;</script>
+<!-- @PG_INLINE_DATA_END -->
+<script id="__pg_i18n__">
+window.__PG_I18N__={"ko":{"lang.toggleTitle":"Language","lang.toggleLabel":"🇰🇷","search.placeholder":"Search papers...","guide.size":"크기 = Score 비례","guide.edge":"엣지 = 논문 계보","guide.hint":"ESC 초기화 · Shift+Click 다중선택","score.tooltip":"점수 산정 기준","score.title":"점수 산정 기준","score.paradigm":"새 패러다임을 열었는가","score.adoption":"산업 프로덕션 채택 정도","score.citation":"인용·파생 연구 규모","score.novelty":"기법의 독창성·깊이","score.timeliness":"현재 관련성·향후 궤적","score.band_95":"판을 바꾼 논문 (Transformer, ResNet)","score.band_90":"필독 (LoRA, Chinchilla, Llama 3)","score.band_85":"고영향 (AWQ, Consistency, DreamBooth)","score.band_84":"보조 참고 (Label Smoothing)","score.weightLabel.paradigm":"Paradigm Shift","score.weightLabel.adoption":"Adoption & Industry","score.weightLabel.citation":"Citation & Ecosystem","score.weightLabel.novelty":"Technical Novelty","score.weightLabel.timeliness":"Timeliness","tip.hasReview":"📄 리뷰 있음","tip.clickHint":"Click for details","panel.cta.title":"PaperGoat 논문 리뷰","panel.cta.placeholderSuffix":" 심층 리뷰가 곧 업데이트됩니다","panel.cta.descSuffix":"의 핵심 아이디어를 비유와 다이어그램으로 쉽게 풀어낸 심층 해설","panel.cta.readReview":"리뷰 읽기 →","panel.cta.comingSoon":"Coming Soon","panel.section.oneLiner":"💡 한줄 소개","panel.section.keyDiscoveries":"🔬 핵심 발견","panel.section.category":"🏷️ 카테고리","panel.section.parents":"⬆️ 기반 논문","panel.section.children":"⬇️ 영향을 준 논문","panel.section.peers":"🔗 같은 분야","panel.link.paper":"📄 논문 원문 ↗","panel.link.paperGoat":"🐐 PaperGoat ↗","panel.hint":"Shift+Click 다중선택 · ESC 초기화"},"en":{"lang.toggleTitle":"Language","lang.toggleLabel":"🇺🇸","search.placeholder":"Search papers...","guide.size":"Size ∝ Score","guide.edge":"Edge = Paper lineage","guide.hint":"ESC to reset · Shift+Click for multi-select","score.tooltip":"Scoring rubric","score.title":"Scoring Rubric","score.paradigm":"Opened a new paradigm?","score.adoption":"Real-world industry adoption","score.citation":"Citations & downstream research","score.novelty":"Originality & technical depth","score.timeliness":"Current relevance & trajectory","score.band_95":"Field-defining (Transformer, ResNet)","score.band_90":"Must-read (LoRA, Chinchilla, Llama 3)","score.band_85":"High-impact (AWQ, Consistency, DreamBooth)","score.band_84":"Supporting reference (Label Smoothing)","score.weightLabel.paradigm":"Paradigm Shift","score.weightLabel.adoption":"Adoption & Industry","score.weightLabel.citation":"Citation & Ecosystem","score.weightLabel.novelty":"Technical Novelty","score.weightLabel.timeliness":"Timeliness","tip.hasReview":"📄 Review available","tip.clickHint":"Click for details","panel.cta.title":"PaperGoat Paper Review","panel.cta.placeholderSuffix":" — in-depth review coming soon","panel.cta.descSuffix":" — deep explainer of the core ideas through analogies and diagrams","panel.cta.readReview":"Read review →","panel.cta.comingSoon":"Coming Soon","panel.section.oneLiner":"💡 One-liner","panel.section.keyDiscoveries":"🔬 Key findings","panel.section.category":"🏷️ Categories","panel.section.parents":"⬆️ Foundational papers","panel.section.children":"⬇️ Influenced papers","panel.section.peers":"🔗 Same field","panel.link.paper":"📄 Original paper ↗","panel.link.paperGoat":"🐐 PaperGoat ↗","panel.hint":"Shift+Click multi-select · ESC to reset"}};
+(function(){
+  var saved=null;try{saved=localStorage.getItem('pg-lang');}catch(e){}
+  var browserLang=(navigator.language||'en').toLowerCase().startsWith('ko')?'ko':'en';
+  window.__PG_LANG__=(saved==='ko'||saved==='en')?saved:browserLang;
+  document.documentElement.lang=window.__PG_LANG__;
+})();
+</script>
+<style>
+:root{
+  --bg:#0b0b14;
+  --glass:rgba(20,20,40,.1);
+  --glass-border:rgba(140,150,200,.08);
+  --glass-shine:rgba(255,255,255,.03);
+  --text:#e8e8ec;--muted:#8888a0;--accent:#5b9bf5;
+  --shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 var(--glass-shine);
+}
+.light{
+  --bg:#f4f4f8;
+  --glass:rgba(255,255,255,.12);
+  --glass-border:rgba(180,185,210,.15);
+  --glass-shine:rgba(255,255,255,.3);
+  --text:#1a1a2e;--muted:#6b6b80;--accent:#2563eb;
+  --shadow:0 8px 32px rgba(0,0,0,.08),inset 0 1px 0 var(--glass-shine);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{margin:0;padding:0;height:100%;background:var(--bg);overflow:hidden}
+body{margin:0;padding:0;height:100%;height:-webkit-fill-available;overflow:hidden;background:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',system-ui,sans-serif;color:var(--text);transition:background .4s,color .4s;touch-action:none;-webkit-touch-callout:none}
+#scene{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;touch-action:none}
+#scene canvas{display:block;width:100%!important;height:100%!important}
+
+/* ── Liquid Glass base ── */
+.glass{
+  background:var(--glass);
+  backdrop-filter:blur(60px) saturate(2.0) brightness(1.05);
+  -webkit-backdrop-filter:blur(60px) saturate(2.0) brightness(1.05);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--shadow);
+  transition:background .4s,border-color .4s,box-shadow .4s;
+}
+
+.hdr{position:fixed;top:0;left:0;right:0;padding:14px 20px;display:flex;align-items:center;gap:12px;z-index:10;pointer-events:none}
+.hdr>*{pointer-events:auto}
+.logo{font-size:17px;font-weight:700;letter-spacing:-.4px}.logo span{color:var(--accent)}
+.search{padding:7px 14px;color:var(--text);font-size:13px;width:200px;outline:none;border-radius:12px}
+.search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,155,245,.15)}.search::placeholder{color:var(--muted)}
+.theme-btn,.lang-btn{width:32px;height:32px;min-width:32px;padding:0;border-radius:10px;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;box-sizing:border-box}
+.theme-btn{font-size:14px}
+.lang-btn{font-size:11px;font-weight:700;letter-spacing:.5px}
+.theme-btn:hover,.lang-btn:hover{border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,155,245,.15)}
+
+.legend{position:fixed;top:56px;left:20px;z-index:10;display:flex;flex-direction:column;gap:1px;border-radius:16px;padding:8px 6px;width:180px}
+.leg-item{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;user-select:none}
+.leg-item:hover{background:rgba(128,128,200,.08)}
+.leg-item.on{color:var(--text)}
+.leg-item.off{opacity:.3}
+.leg-chk{width:14px;height:14px;border-radius:5px;border:1.5px solid var(--muted);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .15s}
+.leg-item.on .leg-chk{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 8px rgba(91,155,245,.3)}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px currentColor}
+.leg-count{font-size:10px;opacity:.5;margin-left:auto;min-width:14px;text-align:right}
+.leg-all{display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--accent);padding:5px 8px;cursor:pointer;border-top:1px solid var(--glass-border);margin-top:3px;border-radius:0 0 10px 10px;transition:background .15s}
+.leg-all:hover{background:rgba(59,130,246,.08)}
+
+.tip{position:fixed;pointer-events:none;z-index:20;border-radius:16px;padding:14px 16px;max-width:300px;opacity:0;transform:translateY(6px) scale(.97);transition:opacity .15s,transform .15s}
+.tip.show{opacity:1;transform:translateY(0) scale(1)}
+.tip-rank{font-size:10px;color:var(--muted)}.tip-alias{font-size:16px;font-weight:700;margin:2px 0}
+.tip-title{font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:6px}
+.tip-reason{font-size:12px;line-height:1.5}.tip-yr{font-size:10px;color:var(--accent);margin-top:6px}
+.tip-cats{margin-top:6px;display:flex;flex-wrap:wrap;gap:3px}
+.tip-cat{font-size:9px;padding:2px 6px;border-radius:6px;background:rgba(128,128,200,.1);color:var(--muted)}
+
+.pnl{position:fixed;top:0;right:0;bottom:0;width:400px;border-left:1px solid var(--glass-border);z-index:30;overflow-y:auto;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1),background .4s;padding:20px;background:var(--glass);backdrop-filter:blur(50px) saturate(1.8);-webkit-backdrop-filter:blur(50px) saturate(1.8);box-shadow:-8px 0 40px rgba(0,0,0,.2)}
+.pnl.open{transform:translateX(0)}
+.pnl-x{position:sticky;top:0;float:right;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:10px;color:var(--muted);font-size:18px;cursor:pointer;padding:4px 10px;z-index:1;transition:all .15s}.pnl-x:hover{color:var(--text);border-color:var(--accent)}
+.pnl .pr{font-size:11px;color:var(--accent);margin-bottom:2px}
+.pnl .pa{font-size:22px;font-weight:800;margin-bottom:3px}
+.pnl .pt{font-size:13px;color:var(--muted);margin-bottom:6px;line-height:1.4}
+.pnl .ps{display:inline-block;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.pnl .preason{font-size:13px;line-height:1.7;margin-bottom:14px;padding:10px 12px;background:rgba(128,128,200,.06);border-radius:12px;border-left:3px solid var(--accent)}
+.pnl .psec{font-size:12px;font-weight:600;color:var(--muted);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.4px}
+.pnl .pdisc{list-style:none;padding:0}.pnl .pdisc li{font-size:12px;line-height:1.5;padding:6px 0;border-bottom:1px solid var(--glass-border)}
+.pnl .ptags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.pnl .ptag{font-size:10px;padding:2px 8px;border-radius:8px;border:1px solid var(--glass-border);color:var(--muted);background:rgba(128,128,200,.05)}
+.pnl .pconns{margin-top:12px}
+.pnl .pconn{display:flex;align-items:center;gap:6px;padding:6px 8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .15s;border-radius:8px}
+.pnl .pconn:hover{color:var(--accent);background:rgba(91,155,245,.06)}
+.pnl .pcdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;box-shadow:0 0 4px currentColor}
+.pnl .plink{display:inline-block;margin-top:10px;color:var(--accent);text-decoration:none;font-size:12px;padding:4px 10px;border-radius:8px;border:1px solid var(--glass-border);transition:all .15s}.pnl .plink:hover{background:rgba(91,155,245,.08);border-color:var(--accent)}
+
+.tl{position:fixed;left:20px;z-index:10;border-radius:14px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:20px;bottom:auto;width:180px;justify-content:center;opacity:0}
+.tl.ready,.info.ready{opacity:1}
+.tl .filter-col{display:flex;flex-direction:column;align-items:center;gap:4px;width:50px}
+.tl .filter-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.tl .filter-val{font-size:10px;font-weight:600;color:var(--accent);text-align:center;white-space:nowrap}
+.tl .range-wrap-v{position:relative;width:20px;height:120px;overflow:hidden}
+.tl .range-wrap-v .range-track-v{position:absolute;top:5px;bottom:5px;width:2px;left:50%;transform:translateX(-50%);background:var(--glass-border);border-radius:2px}
+.tl .range-wrap-v .range-fill-v{position:absolute;width:2px;left:50%;transform:translateX(-50%);background:var(--accent);border-radius:2px;opacity:.5}
+.tl .range-wrap-v input[type=range]{position:absolute;width:120px;height:20px;margin:0;pointer-events:none;-webkit-appearance:none;appearance:none;background:none;transform:rotate(-90deg);left:-50px;top:50px}
+.tl .range-wrap-v input[type=range]::-webkit-slider-runnable-track{background:none;border:none;height:4px}
+.tl .range-wrap-v input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;pointer-events:auto;border:1.5px solid rgba(255,255,255,.6);box-shadow:0 1px 4px rgba(0,0,0,.3);margin-top:-3px}
+.tl .range-wrap-v input[type=range]::-moz-range-track{background:none;border:none;height:4px}
+.tl .range-wrap-v input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;pointer-events:auto;border:1.5px solid rgba(255,255,255,.6)}
+
+.info{position:fixed;left:20px;z-index:10;border-radius:14px;padding:10px 14px;width:180px;font-size:10px;color:var(--muted);line-height:1.6;opacity:0}
+.info-title{font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px}
+.info-shapes{display:flex;flex-direction:column;gap:3px;margin:6px 0 4px}
+.info-shape{display:flex;align-items:center;gap:6px;font-size:10px;white-space:nowrap}
+.info-shape svg{width:14px;height:14px}
+
+.node-label{position:absolute;font-size:11px;color:#fff;pointer-events:none;white-space:nowrap;transform:translate(-50%,-100%);transition:opacity .2s;font-weight:600;letter-spacing:-.2px;background:rgba(10,10,20,.45);backdrop-filter:blur(8px);padding:2px 8px;border-radius:6px;border:1px solid rgba(120,130,180,.15)}
+.light .node-label{color:#1a1a2e;background:rgba(255,255,255,.55);backdrop-filter:blur(8px);border-color:rgba(180,185,210,.3);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.stats{position:fixed;bottom:16px;right:16px;font-size:10px;color:var(--muted);z-index:10}
+.hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted);z-index:10;opacity:.5;transition:opacity 1s}
+
+/* ── Score Info Button + Popover ── */
+.score-info-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:14px;height:14px;margin-left:4px;padding:0;
+  border:1px solid var(--glass-border);border-radius:50%;
+  background:transparent;color:var(--muted);
+  font-size:9px;font-weight:700;font-family:Georgia,serif;font-style:italic;
+  cursor:pointer;line-height:1;vertical-align:middle;transition:all .15s;
+}
+.score-info-btn:hover{color:var(--accent);border-color:var(--accent);background:rgba(91,155,245,.08)}
+.score-popover{
+  display:none;position:fixed;z-index:40;
+  width:280px;max-width:calc(100vw - 24px);
+  padding:0;border-radius:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
+  font-size:11px;
+}
+.score-popover.open{display:block}
+.score-popover-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-bottom:1px solid var(--glass-border);
+  font-weight:700;font-size:12px;color:var(--text);
+}
+.score-popover-x{
+  background:transparent;border:none;color:var(--muted);
+  font-size:18px;cursor:pointer;line-height:1;padding:0 4px;
+}
+.score-popover-x:hover{color:var(--text)}
+.score-popover-body{padding:10px 14px;max-height:60vh;overflow-y:auto}
+.sp-row{display:flex;justify-content:space-between;margin-top:6px;font-weight:600;color:var(--text)}
+.sp-row:first-child{margin-top:0}
+.sp-k{font-size:11px}
+.sp-w{font-size:10px;color:var(--accent)}
+.sp-desc{font-size:10px;color:var(--muted);margin-top:1px;margin-bottom:2px}
+.sp-div{height:1px;background:var(--glass-border);margin:10px 0}
+.sp-band{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4}
+.sp-band b{color:var(--text);font-weight:700;margin-right:6px}
+
+/* ── Mobile ── */
+.mob-sheet{display:contents}
+.mob-toggle{display:none}
+.mob-bar{display:none}
+.mob-reset-btn{display:none}
+
+@media(max-width:1024px){
+  .hdr{padding:8px 12px;gap:6px;box-sizing:border-box}
+  .logo{font-size:13px;flex-shrink:0}
+  .search{width:auto;flex:1 1 0;min-width:0;font-size:16px;padding:7px 10px;border-radius:10px;height:34px;text-align:left}
+  .theme-btn,.lang-btn{padding:0;width:34px;height:34px;min-width:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-sizing:border-box}
+  .theme-btn{font-size:15px}
+  .lang-btn{font-size:10px;font-weight:700;letter-spacing:.5px}
+
+  /* Hide desktop elements */
+  .mob-toggle{display:none !important}
+  .info{display:none !important}
+  .tip{display:none !important}
+  .hint{display:none}
+
+  /* Top filter bar: below header */
+  .mob-bar{
+    display:flex;position:fixed;top:48px;left:8px;right:8px;z-index:13;
+    gap:4px;padding:4px;border-radius:10px;
+  }
+  .mob-bar-btn{
+    flex:1;padding:6px 0;border:none;border-radius:8px;font-size:11px;font-weight:600;
+    cursor:pointer;color:var(--muted);background:transparent;transition:all .15s;
+  }
+  .mob-bar-btn.active{color:var(--accent);background:rgba(91,155,245,.1)}
+  .mob-reset-btn{
+    display:flex;align-items:center;justify-content:center;
+    position:fixed;top:48px;right:8px;z-index:14;
+    padding:0 12px;border:none;border-radius:10px;
+    font-size:11px;font-weight:600;line-height:1;
+    cursor:pointer;color:var(--muted);background:transparent;transition:all .15s;
+    height:36px;box-sizing:border-box;
+  }
+  .mob-reset-btn:active{color:var(--accent)}
+  .mob-bar{right:80px;align-items:center;min-height:36px}
+
+  /* Panels: appear below bar */
+  .mob-sheet{display:block !important;position:fixed;top:86px;left:8px;right:8px;z-index:12;pointer-events:none}
+  .mob-sheet>*{pointer-events:auto}
+
+  .mob-sheet .legend,.mob-sheet .tl{
+    position:static !important;width:auto !important;top:auto !important;bottom:auto !important;
+    border-radius:12px !important;opacity:1 !important;margin-bottom:6px;
+    display:none;
+  }
+  .mob-sheet .legend.mob-show{display:grid !important;grid-template-columns:1fr 1fr;gap:2px 4px}
+  .mob-sheet .tl.mob-show{display:flex !important;flex-direction:column;flex-wrap:nowrap;gap:10px}
+
+  .legend{padding:10px 12px !important}
+  .leg-item{padding:5px 8px;font-size:11px;gap:5px;border-radius:6px}
+  .leg-chk{width:13px;height:13px;font-size:9px;border-radius:4px}
+  .leg-dot{width:8px;height:8px}
+  .leg-count{font-size:9px;margin-left:auto}
+  .leg-all{grid-column:1/-1;font-size:10px;padding:5px;border-top:1px solid var(--glass-border);margin-top:2px;text-align:center}
+
+  .tl{padding:10px 14px !important;border-radius:12px !important}
+  .tl .filter-col{flex-direction:row !important;width:100% !important;align-items:center;gap:8px}
+  .tl .filter-label{font-size:11px;width:40px;flex-shrink:0;font-weight:600}
+  .tl .filter-val{font-size:11px;min-width:36px;text-align:right}
+  .tl .range-wrap-v{position:relative !important;height:32px !important;width:auto !important;flex:1;overflow:visible !important}
+  .tl .range-wrap-v .range-track-v,.tl .range-wrap-v .range-fill-v{display:none !important}
+  .tl .range-wrap-v input[type=range]{
+    position:absolute !important;writing-mode:horizontal-tb !important;direction:ltr !important;
+    -webkit-appearance:none !important;appearance:none !important;
+    width:100% !important;height:32px !important;transform:none !important;
+    left:0 !important;top:0 !important;pointer-events:none !important;background:none !important;margin:0 !important;
+  }
+  .tl .range-wrap-v input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--glass-border);border-radius:2px}
+  .tl .range-wrap-v input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--accent);border:2px solid rgba(255,255,255,.6);margin-top:-10px;pointer-events:auto}
+
+  .pnl{width:100vw;max-width:100vw;padding:16px 14px;border-radius:16px 16px 0 0;
+    top:auto !important;bottom:0 !important;right:0;
+    max-height:75vh;overflow-y:auto;
+    transform:translateY(100%);
+  }
+  .pnl.open{transform:translateY(0)}
+  .pnl .pa{font-size:18px}
+  .pnl .pt{font-size:12px}
+
+  .node-label{font-size:9px;padding:1px 5px}
+  .stats{font-size:9px;bottom:6px;left:12px;right:auto}
+}
+</style>
+</head>
+<body>
+<div id="scene"></div>
+<div id="labels" style="position:fixed;inset:0;pointer-events:none;z-index:5;overflow:hidden"></div>
+
+<div class="hdr">
+  <div class="logo">Paper <span>Galaxy</span></div>
+  <input class="search glass" placeholder="Search papers..." id="search">
+  <button class="lang-btn glass" id="lang-btn" title="Language" data-i18n-title="lang.toggleTitle" data-i18n="lang.toggleLabel" aria-label="Toggle language">🇰🇷</button>
+  <button class="theme-btn glass" id="theme-btn" title="Toggle theme">🌙</button>
+</div>
+<div class="mob-bar glass" id="mob-bar">
+  <button class="mob-bar-btn" id="mob-btn-cat">Category</button>
+  <button class="mob-bar-btn" id="mob-btn-range">Year/Score</button>
+</div>
+<button class="mob-reset-btn glass" id="mob-btn-reset">Reset</button>
+<div class="mob-sheet" id="mob-sheet">
+<div class="legend glass" id="legend"></div>
+<div class="tip glass" id="tip"><div class="tip-rank"></div><div class="tip-alias"></div><div class="tip-title"></div><div class="tip-reason"></div><div class="tip-cats"></div><div class="tip-yr"></div></div>
+<div class="pnl" id="pnl"><button class="pnl-x" id="pnl-x">&times;</button><div id="pnl-c"></div></div>
+<div class="tl glass" id="tl-container">
+  <div class="filter-col">
+    <span class="filter-label">Year</span>
+    <span class="filter-val" id="yr">All</span>
+    <div class="range-wrap-v">
+      <div class="range-track-v"></div>
+      <div class="range-fill-v" id="tl-fill"></div>
+      <input type="range" id="tl-min" min="2012" max="2025" value="2012">
+      <input type="range" id="tl-max" min="2012" max="2025" value="2025">
+    </div>
+  </div>
+  <div class="filter-col">
+    <span class="filter-label">Score <button class="score-info-btn" id="score-info-btn" aria-label="Scoring rubric" title="점수 산정 기준" data-i18n-title="score.tooltip" data-i18n-aria-label="score.tooltip">i</button></span>
+    <span class="filter-val" id="sc-display">All</span>
+    <div class="range-wrap-v">
+      <div class="range-track-v"></div>
+      <div class="range-fill-v" id="sc-fill"></div>
+      <input type="range" id="sc-min" min="84" max="100" value="84">
+      <input type="range" id="sc-max" min="84" max="100" value="100">
+    </div>
+  </div>
+  <div class="leg-all" id="slider-reset" style="width:100%;flex-basis:100%;border-top:1px solid var(--glass-border);margin-top:0;padding-top:6px">All ✓</div>
+</div>
+</div><!-- /mob-sheet -->
+<div class="info glass">
+  <div class="info-title">Guide</div>
+  <div class="info-shapes">
+    <div class="info-shape"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="#5b9bf5" stroke="#fff" stroke-width=".5"/></svg> <span data-i18n="guide.size">크기 = Score 비례</span></div>
+    <div class="info-shape"><svg viewBox="0 0 14 14"><line x1="1" y1="7" x2="13" y2="7" stroke="#7799cc" stroke-width="2"/></svg> <span data-i18n="guide.edge">엣지 = 논문 계보</span></div>
+  </div>
+  <span style="opacity:.4;font-size:9px" data-i18n="guide.hint">ESC 초기화 · Shift+Click 다중선택</span>
+  <a href="https://papergoat.beehiiv.com/" target="_blank" style="display:flex;align-items:center;gap:6px;margin-top:10px;padding:6px 12px;background:rgba(91,155,245,.08);border:1px solid rgba(91,155,245,.2);border-radius:8px;color:var(--accent);text-decoration:none;font-size:11px;font-weight:600;transition:all .15s" onmouseover="this.style.background='rgba(91,155,245,.15)';this.style.borderColor='rgba(91,155,245,.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='rgba(91,155,245,.08)';this.style.borderColor='rgba(91,155,245,.2)';this.style.transform=''"><span style="font-size:14px">🐐</span> PaperGoat <span style="opacity:.5">↗</span></a>
+</div>
+<div class="score-popover glass" id="score-popover" role="dialog" aria-label="Scoring rubric">
+  <div class="score-popover-head">
+    <span data-i18n="score.title">점수 산정 기준</span>
+    <button class="score-popover-x" id="score-popover-x" aria-label="Close">&times;</button>
+  </div>
+  <div class="score-popover-body">
+    <div class="sp-row"><span class="sp-k" data-i18n="score.weightLabel.paradigm">Paradigm Shift</span><span class="sp-w">30%</span></div>
+    <div class="sp-desc" data-i18n="score.paradigm">새 패러다임을 열었는가</div>
+    <div class="sp-row"><span class="sp-k" data-i18n="score.weightLabel.adoption">Adoption & Industry</span><span class="sp-w">25%</span></div>
+    <div class="sp-desc" data-i18n="score.adoption">산업 프로덕션 채택 정도</div>
+    <div class="sp-row"><span class="sp-k" data-i18n="score.weightLabel.citation">Citation & Ecosystem</span><span class="sp-w">20%</span></div>
+    <div class="sp-desc" data-i18n="score.citation">인용·파생 연구 규모</div>
+    <div class="sp-row"><span class="sp-k" data-i18n="score.weightLabel.novelty">Technical Novelty</span><span class="sp-w">15%</span></div>
+    <div class="sp-desc" data-i18n="score.novelty">기법의 독창성·깊이</div>
+    <div class="sp-row"><span class="sp-k" data-i18n="score.weightLabel.timeliness">Timeliness</span><span class="sp-w">10%</span></div>
+    <div class="sp-desc" data-i18n="score.timeliness">현재 관련성·향후 궤적</div>
+    <div class="sp-div"></div>
+    <div class="sp-band"><b>95–100</b> <span data-i18n="score.band_95">판을 바꾼 논문 (Transformer, ResNet)</span></div>
+    <div class="sp-band"><b>90–94</b> <span data-i18n="score.band_90">필독 (LoRA, Chinchilla, Llama 3)</span></div>
+    <div class="sp-band"><b>85–89</b> <span data-i18n="score.band_85">고영향 (AWQ, Consistency, DreamBooth)</span></div>
+    <div class="sp-band"><b>≤84</b> <span data-i18n="score.band_84">보조 참고 (Label Smoothing)</span></div>
+  </div>
+</div>
+<div class="stats" id="stats"></div>
+<div class="hint" id="hint">Drag to rotate · Scroll to zoom · Click a node · Shift+Click multi-select</div>
+<div style="position:fixed;bottom:6px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--muted);opacity:.35;z-index:10">© Paper Galaxy 2026 · Powered by <a href="https://github.com/jsonpassion/papergoat-galaxy-template" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted currentColor">PaperGoat</a> · <a href="https://www.linkedin.com/in/json-lee" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted currentColor">Jason Lee</a></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
+import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
+import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+let DATA, clusters, nodeMap={}, meshMap={};
+let scene, camera, renderer, composer, bloomPass, controls, raycaster, mouse;
+let sphereGroup, edgeGroup;
+let hovered=null, selected=new Set(); // multi-select
+let activeClusters=new Set(), query='';
+let tlMin, tlMax, scMin, scMax; // set from data
+let targetRotationY=null, targetZoom=null; // for smooth rotate/zoom-to-node
+let isDark=true;
+const RADIUS=5;
+
+async function init(){
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,100);
+  camera.position.set(0, RADIUS*0.6, RADIUS*2.8);
+
+  renderer=new THREE.WebGLRenderer({antialias:true});
+  renderer.setSize(innerWidth,innerHeight,false);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.2;
+  updateBg();
+  document.getElementById('scene').appendChild(renderer.domElement);
+
+  // Bloom post-processing
+  composer=new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene,camera));
+  bloomPass=new UnrealBloomPass(
+    new THREE.Vector2(innerWidth,innerHeight),
+    0.5, 0.6, 0.3
+  );
+  composer.addPass(bloomPass);
+
+  controls=new OrbitControls(camera,renderer.domElement);
+  controls.enableDamping=true; controls.dampingFactor=0.05;
+  controls.rotateSpeed=0.5; controls.minDistance=RADIUS*1.2; controls.maxDistance=RADIUS*5;
+  controls.autoRotate=false; controls.enablePan=false;
+
+  scene.add(new THREE.AmbientLight(0xffffff,0.6));
+  const dl=new THREE.DirectionalLight(0xffffff,0.8); dl.position.set(5,10,7); scene.add(dl);
+  const dl2=new THREE.DirectionalLight(0xffffff,0.3); dl2.position.set(-5,-5,-7); scene.add(dl2);
+
+  // Stars — multiple layers for depth
+  function makeStarLayer(count, minSize, maxSize, color, spread){
+    const geo=new THREE.BufferGeometry();
+    const pos=new Float32Array(count*3);
+    const sizes=new Float32Array(count);
+    for(let i=0;i<count;i++){
+      pos[i*3]=(Math.random()-.5)*spread;
+      pos[i*3+1]=(Math.random()-.5)*spread;
+      pos[i*3+2]=(Math.random()-.5)*spread;
+      sizes[i]=minSize+Math.random()*(maxSize-minSize);
+    }
+    geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+    geo.setAttribute('size',new THREE.BufferAttribute(sizes,1));
+    const mat=new THREE.PointsMaterial({
+      color, size:maxSize, sizeAttenuation:true,
+      transparent:true, opacity:0.8, blending:THREE.AdditiveBlending,
+    });
+    return new THREE.Points(geo,mat);
+  }
+  // Far tiny stars
+  const stars1=makeStarLayer(2000, 0.01, 0.03, 0x4455aa, 100);
+  // Mid stars
+  const stars2=makeStarLayer(400, 0.03, 0.06, 0x6677cc, 60);
+  // Close bright stars (few)
+  const stars3=makeStarLayer(60, 0.05, 0.12, 0x99aaee, 40);
+  scene.add(stars1); scene.add(stars2); scene.add(stars3);
+  starPoints={layers:[stars1,stars2,stars3]};
+
+  // Atom theme: electron orbit rings (visible in light mode only)
+  [RADIUS*0.7, RADIUS*1.0, RADIUS*1.3].forEach((r,i)=>{
+    const geo=new THREE.RingGeometry(r-0.005, r+0.005, 80);
+    const mat=new THREE.MeshBasicMaterial({
+      color:0x8899bb, transparent:true, opacity:0.3, side:THREE.DoubleSide
+    });
+    const ring=new THREE.Mesh(geo,mat);
+    // Tilt each ring differently
+    ring.rotation.x=Math.PI*0.5 + [0.3, -0.2, 0.5][i];
+    ring.rotation.y=[0, 0.8, -0.4][i];
+    ring.visible=false; // hidden by default (dark mode)
+    scene.add(ring);
+    orbitRings.push(ring);
+  });
+
+  // Shooting stars (dark mode only)
+  const shootingStars=[];
+  for(let i=0;i<3;i++){
+    const geo=new THREE.BufferGeometry();
+    const positions=new Float32Array(6); // 2 points = line
+    geo.setAttribute('position',new THREE.BufferAttribute(positions,3));
+    const mat=new THREE.LineBasicMaterial({
+      color:0x88aaff, transparent:true, opacity:0, linewidth:1
+    });
+    const line=new THREE.Line(geo,mat);
+    line.visible=false;
+    scene.add(line);
+    shootingStars.push({
+      line, geo, mat,
+      active:false, timer:0,
+      delay:300+Math.random()*600, // frames between shots
+      x:0, y:0, z:0, vx:0, vy:0, vz:0, life:0
+    });
+  }
+  // Store for animate access
+  window._shootingStars=shootingStars;
+
+  raycaster=new THREE.Raycaster(); mouse=new THREE.Vector2();
+
+  // Prefer inlined data (production). Fall back to fetch (local dev).
+  if(window.__PG_DATA__){
+    DATA=window.__PG_DATA__;
+  } else {
+    const r=await fetch('./papers.json'); DATA=await r.json();
+  }
+  clusters=DATA.clusters;
+
+  // Derive filter ranges from data
+  const years=DATA.papers.map(p=>p.year);
+  const scores=DATA.papers.map(p=>p.score);
+  const dataYearMin=Math.min(...years), dataYearMax=Math.max(...years);
+  const dataScoreMin=Math.min(...scores), dataScoreMax=Math.max(...scores);
+  tlMin=dataYearMin; tlMax=dataYearMax;
+  scMin=dataScoreMin; scMax=dataScoreMax;
+
+  // Update slider DOM to match data ranges
+  ['tl-min','tl-max'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.min=dataYearMin; el.max=dataYearMax;
+    el.value=id==='tl-min'?dataYearMin:dataYearMax;
+  });
+  ['sc-min','sc-max'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.min=dataScoreMin; el.max=dataScoreMax;
+    el.value=id==='sc-min'?dataScoreMin:dataScoreMax;
+  });
+
+  sphereGroup=new THREE.Group(); edgeGroup=new THREE.Group();
+  scene.add(sphereGroup); scene.add(edgeGroup);
+
+  buildNodes(); buildEdges(); buildLegend(); bindEvents(); initLabels(); layoutSidebar();
+  window.addEventListener('resize',onResize);
+  window.addEventListener('orientationchange',()=>setTimeout(onResize,100));
+  // Safari address bar changes
+  if(window.visualViewport) window.visualViewport.addEventListener('resize',onResize);
+  animate();
+  updateStats();
+  setTimeout(()=>{document.getElementById('hint').style.opacity='0'},4000);
+}
+
+let starPoints, orbitRings=[];
+function updateBg(){
+  // Dark = Galaxy (deep space), Light = Atom (clean lab)
+  renderer.setClearColor(isDark?0x0b0b14:0xeaecf4);
+
+  // Bloom
+  if(bloomPass){
+    bloomPass.strength=isDark?0.5:0.15;
+    bloomPass.threshold=isDark?0.3:0.7;
+    bloomPass.radius=isDark?0.6:0.3;
+  }
+
+  // Tone mapping
+  if(renderer) renderer.toneMappingExposure=isDark?1.2:1.0;
+
+  // Stars (dark=galaxy) ↔ floating atoms (light=atom)
+  if(starPoints?.layers){
+    const darkColors=[0x4455aa,0x6677cc,0x99aaee];
+    // Light: vivid atom particles — must contrast against white bg
+    const lightColors=[0x5577bb,0xcc6655,0x44aa77];
+    starPoints.layers.forEach((l,i)=>{
+      l.material.color.set(isDark?darkColors[i]:lightColors[i]);
+      l.material.opacity=isDark?0.8:0.6;
+      l.material.blending=isDark?THREE.AdditiveBlending:THREE.NormalBlending;
+      l.material.size=isDark?[0.03,0.06,0.12][i]:[0.06,0.1,0.18][i];
+    });
+  }
+
+  // Orbit rings: hidden in dark, visible in light (electron orbits)
+  orbitRings.forEach(r=>{ r.visible=!isDark; });
+
+  // Nodes
+  if(sphereGroup){
+    sphereGroup.children.forEach(mesh=>{
+      if(!mesh.userData?.id) return;
+      const c=mesh._color;
+      if(isDark){
+        // Galaxy: emissive glow
+        mesh.material.emissive=c;
+        mesh.material.color=c;
+        mesh.material.roughness=0.1;
+        mesh.material.metalness=0.1;
+        mesh.material.clearcoat=0.8;
+      } else {
+        // Atom: solid glossy surface, no emissive
+        mesh.material.emissive=new THREE.Color(0x111111);
+        mesh.material.color=c;
+        mesh.material.roughness=0.15;
+        mesh.material.metalness=0.4; // metallic sheen
+        mesh.material.clearcoat=1.0; // high gloss like polished atoms
+      }
+    });
+  }
+
+  // Edges
+  if(edgeGroup){
+    edgeGroup.children.forEach(tube=>{
+      if(!tube.userData) return;
+      const isLineage=tube.userData.type==='lineage';
+      if(isDark){
+        tube.material.color.set(isLineage?0x7799cc:0x556688);
+        tube._baseOpacity=isLineage?0.3:0.08;
+      } else {
+        // Atom: dark visible bonds on light bg
+        tube.material.color.set(isLineage?0x445577:0x667788);
+        tube._baseOpacity=isLineage?0.7:0.35;
+        tube.material.blending=THREE.NormalBlending;
+      }
+    });
+  }
+}
+
+function buildNodes(){
+  const ck=Object.keys(clusters);
+
+  // Sort papers: group by cluster, then by score within cluster
+  // This way fibonacci spiral places same-cluster nodes adjacent
+  const sorted=[...DATA.papers].sort((a,b)=>{
+    const ci=ck.indexOf(a.cluster)-ck.indexOf(b.cluster);
+    return ci!==0?ci:b.score-a.score;
+  });
+
+  // Fibonacci sphere distribution — perfectly uniform, no overlap
+  const N=sorted.length;
+  const goldenAngle=Math.PI*(3-Math.sqrt(5));
+
+  sorted.forEach((p,i)=>{
+    nodeMap[p.id]=p;
+
+    // Fibonacci sphere: uniform distribution on sphere surface
+    const y=1-(i/(N-1))*2; // -1 to 1
+    const radiusAtY=Math.sqrt(1-y*y);
+    const theta=goldenAngle*i;
+    const x=Math.cos(theta)*radiusAtY;
+    const z=Math.sin(theta)*radiusAtY;
+
+    p._pos=new THREE.Vector3(x*RADIUS, y*RADIUS, z*RADIUS);
+    p._alpha=1; p._targetAlpha=1; p._visible=true;
+
+    const size=0.07+(p.score-80)*0.009;
+    const color=new THREE.Color(clusters[p.cluster]?.color||'#888');
+
+    // All nodes are smooth spheres — size differentiates score
+    const geo=new THREE.SphereGeometry(size,24,16);
+    const mat=new THREE.MeshPhysicalMaterial({
+      color, emissive:color, emissiveIntensity:0.7,
+      roughness:0.1, metalness:0.1,
+      clearcoat:0.8, clearcoatRoughness:0.2,
+      transparent:true, opacity:1,
+    });
+    const mesh=new THREE.Mesh(geo,mat);
+    mesh.position.copy(p._pos);
+    mesh.userData=p;
+    mesh._baseSize=size;
+    mesh._color=color;
+    mesh._scaleTarget=1;
+    mesh._scaleCurrent=1;
+    sphereGroup.add(mesh);
+    meshMap[p.id]=mesh;
+  });
+}
+
+function buildEdges(){
+  edgeGroup.clear();
+  DATA.edges.forEach(e=>{
+    const a=meshMap[e.source],b=meshMap[e.target];
+    if(!a||!b) return;
+    const isLineage=e.type==='lineage';
+    // Great-circle arc: slerp between node surface points on the sphere.
+    // This guarantees a smooth, uniform-radius curve hugging the sphere surface.
+    const sA=a.position.clone().normalize();
+    const sB=b.position.clone().normalize();
+    const arcAngle=Math.acos(Math.max(-1,Math.min(1,sA.dot(sB))));
+    const sinA=Math.sin(arcAngle);
+    const nodeAngleA=(a._baseSize||0.08)/RADIUS;   // angular radius of node A
+    const nodeAngleB=(b._baseSize||0.08)/RADIUS;
+    const SEG=40;  // sample count for the curve
+    const pts=[];
+    for(let i=0;i<=SEG;i++){
+      const t=nodeAngleA/arcAngle + (i/SEG)*(1-(nodeAngleA+nodeAngleB)/arcAngle);
+      let v;
+      if(sinA<1e-6){
+        v=sA.clone().lerp(sB,t);
+      } else {
+        const w1=Math.sin((1-t)*arcAngle)/sinA;
+        const w2=Math.sin(t*arcAngle)/sinA;
+        v=sA.clone().multiplyScalar(w1).add(sB.clone().multiplyScalar(w2));
+      }
+      // Slight outward bulge peaking at the midpoint (sin profile) so edges don't clip the sphere
+      const bulge=1+0.025*Math.sin(Math.PI*(i/SEG));
+      v.multiplyScalar(RADIUS*bulge);
+      pts.push(v);
+    }
+    const curve=new THREE.CatmullRomCurve3(pts,false,'centripetal',0.5);
+    const tubeR=isLineage?0.012:0.005;
+    // High-density tessellation for smooth appearance at any zoom level
+    const geo=new THREE.TubeGeometry(curve,128,tubeR,12,false);
+    const mat=new THREE.MeshBasicMaterial({
+      color:isLineage?0x7799cc:0x556688,
+      transparent:true, opacity:isLineage?0.3:0.08,
+    });
+    const tube=new THREE.Mesh(geo,mat);
+    tube.userData=e;
+    tube._baseOpacity=isLineage?0.3:0.08;
+    tube.renderOrder=-1;          // draw edges before nodes
+    mat.depthWrite=false;          // don't occlude nodes via depth
+    edgeGroup.add(tube);
+  });
+  edgeGroup.renderOrder=-1;
+}
+
+function animate(){
+  requestAnimationFrame(animate);
+
+  // Smooth rotate to clicked node, or slow auto-rotate
+  if(targetRotationY!==null){
+    let diff=targetRotationY-sphereGroup.rotation.y;
+    while(diff>Math.PI) diff-=Math.PI*2;
+    while(diff<-Math.PI) diff+=Math.PI*2;
+    sphereGroup.rotation.y+=diff*0.04;
+    if(Math.abs(diff)<0.005) targetRotationY=null;
+  } else {
+    sphereGroup.rotation.y+=hovered?0.000005:0.00015;
+  }
+  // Smooth zoom out if too close
+  if(targetZoom!==null){
+    const dir=camera.position.clone().normalize();
+    const curDist=camera.position.length();
+    const newDist=curDist+(targetZoom-curDist)*0.05;
+    camera.position.copy(dir.multiplyScalar(newDist));
+    if(Math.abs(newDist-targetZoom)<0.1) targetZoom=null;
+  }
+  edgeGroup.rotation.y=sphereGroup.rotation.y;
+
+  // Parallax rotation — galaxy: subtle, atom: gentle float
+  if(starPoints?.layers){
+    const sp=isDark?1:1.5; // atom particles rotate slightly faster for "floating" feel
+    starPoints.layers[0].rotation.y+=0.00002*sp;
+    starPoints.layers[1].rotation.y+=0.00005*sp;
+    starPoints.layers[2].rotation.y+=0.00008*sp;
+    starPoints.layers[0].rotation.x+=0.00001*sp;
+    starPoints.layers[1].rotation.x+=0.00003*sp;
+    // Atom: extra z-axis wobble for organic floating
+    if(!isDark){
+      starPoints.layers[0].rotation.z+=0.00001;
+      starPoints.layers[2].rotation.z-=0.00002;
+    }
+  }
+
+  // Orbit rings gentle rotation (atom theme)
+  orbitRings.forEach((r,i)=>{
+    r.rotation.z+=0.0001*(i+1);
+  });
+
+  // Shooting stars (dark mode only)
+  if(isDark&&window._shootingStars){
+    window._shootingStars.forEach(s=>{
+      if(!s.active){
+        s.timer++;
+        if(s.timer>s.delay){
+          // Launch new shooting star
+          s.active=true; s.life=0;
+          s.x=(Math.random()-.5)*50; s.y=15+Math.random()*15; s.z=(Math.random()-.5)*30;
+          const speed=0.3+Math.random()*0.3;
+          s.vx=(Math.random()-.5)*speed;
+          s.vy=-speed;
+          s.vz=(Math.random()-.5)*speed*0.5;
+          s.line.visible=true;
+          s.delay=400+Math.random()*800;
+          s.timer=0;
+        }
+      } else {
+        s.life++;
+        s.x+=s.vx; s.y+=s.vy; s.z+=s.vz;
+        const tail=3;
+        const pos=s.geo.attributes.position.array;
+        pos[0]=s.x; pos[1]=s.y; pos[2]=s.z;
+        pos[3]=s.x-s.vx*tail; pos[4]=s.y-s.vy*tail; pos[5]=s.z-s.vz*tail;
+        s.geo.attributes.position.needsUpdate=true;
+        // Fade in then out
+        const maxLife=60;
+        const fade=s.life<10?s.life/10:Math.max(0,1-(s.life-10)/(maxLife-10));
+        s.mat.opacity=fade*0.6;
+        if(s.life>maxLife){
+          s.active=false; s.line.visible=false;
+        }
+      }
+    });
+  } else if(window._shootingStars){
+    window._shootingStars.forEach(s=>{s.line.visible=false;s.active=false});
+  }
+
+  // Pre-compute neighbor set for hover dimming (Obsidian-style)
+  const hovNeighbors=new Set();
+  if(hovered){
+    hovNeighbors.add(hovered.id);
+    DATA.edges.forEach(e=>{
+      if(e.source===hovered.id) hovNeighbors.add(e.target);
+      if(e.target===hovered.id) hovNeighbors.add(e.source);
+    });
+  }
+  const selIds=new Set([...selected].map(s=>s.id));
+  const selNeighbors=new Set();
+  selIds.forEach(sid=>{
+    selNeighbors.add(sid);
+    DATA.edges.forEach(e=>{
+      if(e.source===sid) selNeighbors.add(e.target);
+      if(e.target===sid) selNeighbors.add(e.source);
+    });
+  });
+
+  sphereGroup.children.forEach(mesh=>{
+    if(!mesh.userData?.id) return;
+    const p=mesh.userData;
+
+    // Hover dim: non-connected nodes fade to 0.1 (Obsidian-style)
+    let dimTarget=p._targetAlpha; // from filter/search
+    // Light mode needs higher dim alpha (no emissive glow to help)
+    const dimLo=isDark?0.08:0.25;
+    const dimMid=isDark?0.15:0.3;
+    if(hovered && dimTarget>0.5){
+      dimTarget=hovNeighbors.has(p.id)?1:dimLo;
+    } else if(selected.size>0 && dimTarget>0.5){
+      dimTarget=selNeighbors.has(p.id)?1:dimMid;
+    }
+    p._alpha+=(dimTarget-p._alpha)*0.1;
+    mesh.material.opacity=p._alpha;
+
+    // Scale
+    const isH=hovered===p, isS=selIds.has(p.id);
+    const isConn=hovNeighbors.has(p.id)||selNeighbors.has(p.id);
+    // Dimmed/inactive nodes render thinner
+    const isDimmed=(hovered||selected.size>0)&&!isH&&!isS&&!isConn;
+    const isFilteredOut=p._targetAlpha<0.5;
+    mesh._scaleTarget=isH?2.5:isS?2.0:(isConn&&(hovered||selected.size))?1.4:(isDimmed||isFilteredOut?0.7:1);
+    mesh._scaleCurrent+=(mesh._scaleTarget-mesh._scaleCurrent)*0.08;
+    mesh.scale.setScalar(mesh._scaleCurrent);
+
+    // Dark: softer glow (less blinding), Light: subtle highlight
+    const targetEI=isDark
+      ?(isH?2.0:isS?1.6:isConn?1.2:0.7)
+      :(isH?0.5:isS?0.3:0.05);
+    mesh.material.emissiveIntensity+=(targetEI-mesh.material.emissiveIntensity)*0.1;
+  });
+
+  edgeGroup.children.forEach(tube=>{
+    const e=tube.userData;
+    if(!e) return;
+    const base=tube._baseOpacity||0.15;
+    let targetOp=base;
+    const srcSel=selIds.has(e.source), tgtSel=selIds.has(e.target);
+    const srcHov=hovered&&e.source===hovered.id, tgtHov=hovered&&e.target===hovered.id;
+    if(srcSel||tgtSel) targetOp=0.9;
+    else if(srcHov||tgtHov) targetOp=0.7;
+    // Dim non-connected edges on hover
+    else if(hovered) targetOp=isDark?0.02:0.08;
+    const a1=nodeMap[e.source]?._alpha||0, a2=nodeMap[e.target]?._alpha||0;
+    tube.material.opacity+=(targetOp*Math.min(a1,a2)-tube.material.opacity)*0.1;
+    if(srcSel||tgtSel){
+      const selNode=[...selected].find(s=>s.id===e.source||s.id===e.target);
+      tube.material.color.set(selNode?clusters[selNode.cluster]?.color||'#5b9bf5':'#5b9bf5');
+    } else if(srcHov||tgtHov){
+      tube.material.color.set(clusters[hovered.cluster]?.color||'#5b9bf5');
+    } else {
+      tube.material.color.set(isDark?0x7799cc:0x445577);
+    }
+  });
+
+  controls.update();
+  composer.render(); // bloom post-processing
+  updateLabels();
+}
+
+function onResize(){
+  const el=document.getElementById('scene');
+  const w=el.clientWidth||innerWidth;
+  const h=el.clientHeight||innerHeight;
+  camera.aspect=w/h;camera.updateProjectionMatrix();
+  renderer.setSize(w,h,false);
+  composer.setSize(w,h);
+  layoutSidebar();
+  // Clean up mobile-state classes when resizing across the breakpoint
+  const isMobile=window.innerWidth<=1024;
+  const leg=document.getElementById('legend');
+  const tl=document.getElementById('tl-container');
+  if(!isMobile){
+    // Back to desktop: close any open mobile panels
+    leg&&leg.classList.remove('mob-show');
+    tl&&tl.classList.remove('mob-show');
+    document.getElementById('mob-btn-cat')?.classList.remove('active');
+    document.getElementById('mob-btn-range')?.classList.remove('active');
+  }
+  // Close score popover on any resize (its position is cached)
+  document.getElementById('score-popover')?.classList.remove('open');
+}
+
+function layoutSidebar(){
+  if(window.innerWidth<=1024) return;
+  const legend=document.getElementById('legend');
+  const tl=document.getElementById('tl-container');
+  const info=document.querySelector('.info');
+  if(!legend||!tl||!info) return;
+  const gap=6;
+  const legRect=legend.getBoundingClientRect();
+  tl.style.top=(legRect.bottom+gap)+'px';
+  requestAnimationFrame(()=>{
+    const tlRect=tl.getBoundingClientRect();
+    info.style.top=(tlRect.bottom+gap)+'px';
+    tl.classList.add('ready');
+    info.classList.add('ready');
+    info.style.opacity='1';
+  });
+}
+
+// Zoom-based label fade (Obsidian-style) — all nodes get labels
+const labelEls={};
+function initLabels(){
+  const container=document.getElementById('labels');
+  DATA.papers.forEach(p=>{
+    const el=document.createElement('div');
+    el.className='node-label';
+    el.textContent=p.alias;
+    el.style.color=clusters[p.cluster]?.color||'#888';
+    container.appendChild(el);
+    labelEls[p.id]=el;
+  });
+}
+function updateLabels(){
+  const vec=new THREE.Vector3();
+  const camDist=camera.position.length(); // zoom level
+  // Zoom thresholds: at 14 (default) show score≥88, zoomed in shows more
+  const R=RADIUS;
+  const zoomThreshold=camDist>R*4?99:camDist>R*3?96:camDist>R*2.4?93:camDist>R*1.8?88:camDist>R*1.4?84:0;
+
+  for(const[id,el]of Object.entries(labelEls)){
+    const mesh=meshMap[id];
+    if(!mesh) continue;
+    const p=mesh.userData;
+    mesh.getWorldPosition(vec);
+    vec.project(camera);
+    const x=(vec.x*0.5+0.5)*innerWidth;
+    const y=(-vec.y*0.5+0.5)*innerHeight;
+
+    // Show label if: score above zoom threshold, or hovered/selected/connected
+    const isActive=hovered===p||selected.has(p);
+    const showByZoom=p.score>=zoomThreshold;
+    const show=(showByZoom||isActive)&&vec.z<1&&p._alpha>0.15;
+
+    if(!show){
+      el.style.opacity='0';
+    } else {
+      const fadeIn=isActive?1:Math.min(1, Math.max(0.3, (p.score-zoomThreshold+5)/10));
+      el.style.opacity=String(p._alpha*fadeIn*0.9);
+      el.style.left=x+'px';
+      el.style.top=(y-8)+'px';
+      // Larger font for hovered/selected
+      el.style.fontSize=isActive?'13px':'11px';
+      el.style.fontWeight=isActive?'700':'600';
+    }
+  }
+}
+
+function doRaycast(e){
+  mouse.x=(e.clientX/innerWidth)*2-1;
+  mouse.y=-(e.clientY/innerHeight)*2+1;
+  raycaster.setFromCamera(mouse,camera);
+  // Use scaled threshold for easier picking
+  const camDist=camera.position.length();
+  raycaster.params.Mesh={threshold:0};
+  // Intersect with recursive to catch rotated group
+  const hits=raycaster.intersectObjects(sphereGroup.children,false);
+  // Sort by distance and find closest visible node
+  hits.sort((a,b)=>a.distance-b.distance);
+  for(const h of hits){
+    const ud=h.object.userData;
+    if(ud?.id && ud._alpha>0.15) return ud;
+  }
+  return null;
+}
+
+
+// ── i18n globals (top-level so openPanel can access tr()) ──
+var currentLang=window.__PG_LANG__||'ko';
+function tr(key){
+  var tbl=(window.__PG_I18N__||{})[currentLang]||{};
+  return tbl[key]!==undefined?tbl[key]:key;
+}
+function rn(n){
+  // Returns localized reason for a paper node based on currentLang.
+  if(!n)return '';
+  if(currentLang==='en')return n.reason_en||n.reason||'';
+  return n.reason||n.reason_en||'';
+}
+function applyI18n(){
+  document.documentElement.lang=currentLang;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    el.textContent=tr(el.dataset.i18n);
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(function(el){
+    el.setAttribute('title',tr(el.dataset.i18nTitle));
+  });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(function(el){
+    el.setAttribute('aria-label',tr(el.dataset.i18nAriaLabel));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    el.setAttribute('placeholder',tr(el.dataset.i18nPlaceholder));
+  });
+  var pnl=document.getElementById('pnl');
+  if(pnl&&pnl.classList.contains('open')){
+    var cur=null;
+    if(typeof selected!=='undefined'&&selected&&selected.size>0){
+      var it=selected.values();var v;while(!(v=it.next()).done)cur=v.value;
+    }
+    if(cur&&typeof openPanel==='function')openPanel(cur);
+  }
+}
+
+function bindEvents(){
+  // Prevent browser zoom/scroll on canvas
+  renderer.domElement.addEventListener('touchstart',e=>{e.preventDefault()},{passive:false});
+  renderer.domElement.addEventListener('touchmove',e=>{e.preventDefault()},{passive:false});
+  // Prevent double-tap zoom
+  let lastTap=0;
+  renderer.domElement.addEventListener('touchend',e=>{
+    const now=Date.now();
+    if(now-lastTap<300) e.preventDefault();
+    lastTap=now;
+  },{passive:false});
+
+  let pDown=false,pStartX=0,pStartY=0;
+  renderer.domElement.addEventListener('pointermove',e=>{
+    hovered=doRaycast(e);
+    renderer.domElement.style.cursor=hovered?'pointer':'grab';
+    showTip();
+  });
+  let lastClickEvent=null;
+  renderer.domElement.addEventListener('pointerdown',e=>{pDown=true;pStartX=e.clientX;pStartY=e.clientY;lastClickEvent=e});
+  renderer.domElement.addEventListener('pointerup',e=>{
+    const dist=Math.abs(e.clientX-pStartX)+Math.abs(e.clientY-pStartY);
+    const isMobile=window.innerWidth<=1024;
+    const isClick=dist<(isMobile?25:10);
+    // On mobile, re-raycast at tap position (pointermove may not fire)
+    if(isClick) hovered=doRaycast(e);
+    if(isClick&&hovered){
+      if(lastClickEvent&&lastClickEvent.shiftKey){
+        // Multi-select toggle with Shift
+        if(selected.has(hovered)) selected.delete(hovered);
+        else selected.add(hovered);
+      } else {
+        // Single click replaces selection
+        selected.clear();
+        selected.add(hovered);
+      }
+      // Rotate globe so clicked node comes to front (closest to camera)
+      const clickedNode=[...selected][selected.size-1];
+      const pos=clickedNode._pos; // local position on sphere
+      // Node's local angle on XZ plane
+      const nodeLocalAngle=Math.atan2(pos.x, pos.z);
+      // When rotated by sphereGroup.rotation.y, node's world angle = nodeLocalAngle + rotation.y
+      // Camera position angle on XZ plane
+      const camAngle=Math.atan2(camera.position.x, camera.position.z);
+      // We want: nodeLocalAngle + targetRot = camAngle → targetRot = camAngle - nodeLocalAngle
+      targetRotationY=camAngle-nodeLocalAngle;
+      // If zoomed in too close, ease out to comfortable distance
+      const dist=camera.position.length();
+      if(dist<RADIUS*2) targetZoom=RADIUS*2.4;
+      openPanel(clickedNode);
+    } else if(isClick){
+      selected.clear();
+      closePanel();
+    }
+    pDown=false;
+  });
+
+  const searchEl=document.getElementById('search');
+  searchEl.addEventListener('input',e=>{query=e.target.value;updateVis()});
+  // iOS Safari: prevent viewport shift on keyboard open
+  searchEl.addEventListener('focus',()=>{
+    document.documentElement.style.position='fixed';
+    document.documentElement.style.width='100%';
+  });
+  searchEl.addEventListener('blur',()=>{
+    document.documentElement.style.position='';
+    document.documentElement.style.width='';
+    window.scrollTo(0,0);
+  });
+
+  const tlMinEl=document.getElementById('tl-min');
+  const tlMaxEl=document.getElementById('tl-max');
+  // Bring last-touched slider to top so it's always draggable
+  tlMinEl.addEventListener('pointerdown',()=>{tlMinEl.style.zIndex=2;tlMaxEl.style.zIndex=1});
+  tlMaxEl.addEventListener('pointerdown',()=>{tlMaxEl.style.zIndex=2;tlMinEl.style.zIndex=1});
+
+  function onTimelineChange(){
+    let lo=+tlMinEl.value, hi=+tlMaxEl.value;
+    // Prevent crossing — swap values if needed
+    if(lo>hi){ const tmp=lo; lo=hi; hi=tmp; tlMinEl.value=lo; tlMaxEl.value=hi; }
+    tlMin=lo; tlMax=hi;
+    document.getElementById('yr').textContent=(lo===+tlMinEl.min&&hi===+tlMinEl.max)?'All':`${lo}–${hi}`;
+    // Update fill bar
+    const pct0=(lo-tlMinEl.min)/(tlMinEl.max-tlMinEl.min)*100;
+    const pct1=(hi-tlMinEl.min)/(tlMinEl.max-tlMinEl.min)*100;
+    document.getElementById('tl-fill').style.bottom=pct0+'%';
+    document.getElementById('tl-fill').style.height=(pct1-pct0)+'%';
+    updateVis();
+  }
+  tlMinEl.addEventListener('input',onTimelineChange);
+  tlMaxEl.addEventListener('input',onTimelineChange);
+  onTimelineChange.call(tlMinEl);
+
+  // Score filter
+  const scMinEl=document.getElementById('sc-min');
+  const scMaxEl=document.getElementById('sc-max');
+  scMinEl.addEventListener('pointerdown',()=>{scMinEl.style.zIndex=2;scMaxEl.style.zIndex=1});
+  scMaxEl.addEventListener('pointerdown',()=>{scMaxEl.style.zIndex=2;scMinEl.style.zIndex=1});
+  function onScoreChange(){
+    let lo=+scMinEl.value, hi=+scMaxEl.value;
+    if(lo>hi){ const tmp=lo; lo=hi; hi=tmp; scMinEl.value=lo; scMaxEl.value=hi; }
+    scMin=lo; scMax=hi;
+    document.getElementById('sc-display').textContent=(lo===+scMinEl.min&&hi===+scMinEl.max)?'All':`${lo}–${hi}`;
+    const pct0=(lo-scMinEl.min)/(scMinEl.max-scMinEl.min)*100;
+    const pct1=(hi-scMinEl.min)/(scMinEl.max-scMinEl.min)*100;
+    document.getElementById('sc-fill').style.bottom=pct0+'%';
+    document.getElementById('sc-fill').style.height=(pct1-pct0)+'%';
+    updateVis();
+  }
+  scMinEl.addEventListener('input',onScoreChange);
+  scMaxEl.addEventListener('input',onScoreChange);
+  onScoreChange.call(scMinEl);
+
+  document.getElementById('slider-reset').addEventListener('click',()=>{
+    tlMinEl.value=tlMinEl.min;tlMaxEl.value=tlMaxEl.max;onTimelineChange.call(tlMinEl);
+    scMinEl.value=scMinEl.min;scMaxEl.value=scMaxEl.max;onScoreChange.call(scMinEl);
+  });
+
+  document.getElementById('pnl-x').addEventListener('click',()=>{selected.clear();closePanel()});
+
+  // Mobile/Tablet: toggle filter panels (always bind — CSS controls visibility)
+  {
+    const leg=document.getElementById('legend');
+    const tl=document.getElementById('tl-container');
+    const btnCat=document.getElementById('mob-btn-cat');
+    const btnRange=document.getElementById('mob-btn-range');
+    const btnReset=document.getElementById('mob-btn-reset');
+
+    function mobCloseAll(){
+      leg.classList.remove('mob-show');
+      tl.classList.remove('mob-show');
+      btnCat.classList.remove('active');
+      btnRange.classList.remove('active');
+    }
+    function mobTogglePanel(panel,btn){
+      const isOpen=panel.classList.contains('mob-show');
+      mobCloseAll();
+      if(!isOpen){
+        panel.classList.add('mob-show');
+        btn.classList.add('active');
+      }
+    }
+    btnCat.addEventListener('click',(e)=>{e.stopPropagation();mobTogglePanel(leg,btnCat);});
+    btnRange.addEventListener('click',(e)=>{e.stopPropagation();mobTogglePanel(tl,btnRange);});
+    // Prevent clicks inside the open panels from closing them
+    leg.addEventListener('click',(e)=>e.stopPropagation());
+    tl.addEventListener('click',(e)=>e.stopPropagation());
+    // Tap outside (background) closes open panels
+    document.addEventListener('click',(e)=>{
+      const anyOpen=leg.classList.contains('mob-show')||tl.classList.contains('mob-show');
+      if(!anyOpen)return;
+      // Ignore clicks on the toggle buttons (they handle their own toggle)
+      if(e.target===btnCat||e.target===btnRange)return;
+      mobCloseAll();
+    });
+    btnReset.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      // Reset category: clear active set = "all selected"
+      activeClusters.clear();refreshLegendUI();
+      // Reset Year/Score sliders to full range (call change handlers to update fill + display)
+      tlMinEl.value=tlMinEl.min;tlMaxEl.value=tlMaxEl.max;
+      onTimelineChange.call(tlMinEl);
+      scMinEl.value=scMinEl.min;scMaxEl.value=scMaxEl.max;
+      onScoreChange.call(scMinEl);
+      // Reset search query
+      query='';document.getElementById('search').value='';
+      updateVis();
+      // Close any open panels
+      mobCloseAll();
+    });
+  }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){
+      selected.clear();closePanel();query='';document.getElementById('search').value='';
+      activeClusters.clear();refreshLegendUI();
+      tlMinEl.value=tlMinEl.min;tlMaxEl.value=tlMaxEl.max;onTimelineChange.call(tlMinEl);
+      scMinEl.value=scMinEl.min;scMaxEl.value=scMaxEl.max;onScoreChange.call(scMinEl);
+    }
+  });
+
+  // Score info popover
+  (()=>{
+    const btn=document.getElementById('score-info-btn');
+    const pop=document.getElementById('score-popover');
+    const xBtn=document.getElementById('score-popover-x');
+    if(!btn||!pop)return;
+    function positionPopover(){
+      const r=btn.getBoundingClientRect();
+      const isMobile=window.matchMedia('(max-width:1024px)').matches;
+      if(isMobile){
+        pop.style.top=(r.bottom+8)+'px';
+        pop.style.left='12px';
+        pop.style.right='12px';
+        pop.style.width='auto';
+      }else{
+        // Desktop: tl is fixed on right side, open popover to the left of the button
+        const popW=280;
+        let left=r.left-popW-12;
+        if(left<12)left=r.right+12;
+        pop.style.left=left+'px';
+        pop.style.top=Math.max(12,r.top)+'px';
+        pop.style.right='auto';
+        pop.style.width=popW+'px';
+      }
+    }
+    btn.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      const open=pop.classList.toggle('open');
+      if(open)positionPopover();
+    });
+    xBtn.addEventListener('click',()=>pop.classList.remove('open'));
+    document.addEventListener('click',(e)=>{
+      if(pop.classList.contains('open')&&!pop.contains(e.target)&&e.target!==btn){
+        pop.classList.remove('open');
+      }
+    });
+    window.addEventListener('resize',()=>{if(pop.classList.contains('open'))positionPopover()});
+  })();
+
+  // ── i18n: bind lang-btn (helpers defined at top level) ──
+  document.getElementById('lang-btn').addEventListener('click',function(){
+    currentLang=(currentLang==='ko')?'en':'ko';
+    try{localStorage.setItem('pg-lang',currentLang);}catch(e){}
+    applyI18n();
+  });
+  applyI18n();
+
+  // Theme toggle
+  document.getElementById('theme-btn').addEventListener('click',()=>{
+    isDark=!isDark;
+    document.body.classList.toggle('light',!isDark);
+    document.documentElement.style.background=isDark?'#0b0b14':'#eaecf4';
+    document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+    // Update Safari bar color
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content',isDark?'#0b0b14':'#eaecf4');
+    updateBg();
+  });
+}
+
+function updateVis(){
+  DATA.papers.forEach(p=>{
+    let v=true;
+    if(activeClusters.size>0&&!activeClusters.has(p.cluster)) v=false;
+    if(p.year<tlMin||p.year>tlMax) v=false;
+    if(p.score<scMin||p.score>scMax) v=false;
+    if(query){
+      const q=query.toLowerCase();
+      v=p.alias.toLowerCase().includes(q)||p.title.toLowerCase().includes(q)||
+        p.categories.some(c=>c.toLowerCase().includes(q))||p.reason.toLowerCase().includes(q);
+    }
+    p._targetAlpha=v?1:0.03;
+    p._visible=v;
+  });
+  updateStats();
+}
+
+function updateStats(){
+  const vis=DATA.papers.filter(p=>p._visible).length;
+  document.getElementById('stats').textContent=`${vis}/${DATA.papers.length}`;
+}
+
+let _tipNode=null, _tipX=0, _tipY=0;
+function showTip(){
+  const t=document.getElementById('tip');
+  if(!hovered||window.innerWidth<=1024){
+    t.classList.remove('show');
+    _tipNode=null;
+    return;
+  }
+  const n=hovered;
+  // Update content only when node changes
+  if(_tipNode!==n){
+    _tipNode=n;
+    _tipX=0;_tipY=0; // snap to new node position instantly
+    const c=clusters[n.cluster]?.color||'#888';
+    t.querySelector('.tip-rank').textContent=`#${n.rank} · ${n.year}`;
+    t.querySelector('.tip-alias').textContent=n.alias;
+    t.querySelector('.tip-alias').style.color=c;
+    t.querySelector('.tip-title').textContent=n.title;
+    t.querySelector('.tip-reason').textContent=rn(n);
+    t.querySelector('.tip-cats').innerHTML=n.categories.map(x=>`<span class="tip-cat">#${x}</span>`).join('');
+    t.querySelector('.tip-yr').textContent=n.has_review?tr('tip.hasReview'):tr('tip.clickHint');
+  }
+  // Position: anchor to node, update every frame smoothly
+  const mesh=meshMap[n.id];
+  if(mesh){
+    const vec=new THREE.Vector3();
+    mesh.getWorldPosition(vec);
+    vec.project(camera);
+    let tx=(vec.x*0.5+0.5)*innerWidth+16;
+    let ty=(-vec.y*0.5+0.5)*innerHeight-20;
+    if(tx+300>innerWidth) tx=tx-330;
+    if(ty+180>innerHeight) ty=ty-200;
+    if(ty<10) ty=10;
+    if(_tipX===0&&_tipY===0){_tipX=tx;_tipY=ty} // snap first frame
+    else{_tipX+=(tx-_tipX)*0.15;_tipY+=(ty-_tipY)*0.15} // smooth follow
+    t.style.left=_tipX+'px';t.style.top=_tipY+'px';
+  }
+  t.classList.add('show');
+}
+// Reset tip position when node changes
+function resetTipPos(){_tipX=0;_tipY=0;}
+
+// ── Legend (multi-select) ──
+function buildLegend(){
+  const el=document.getElementById('legend');
+  const counts={};
+  DATA.papers.forEach(p=>{counts[p.cluster]=(counts[p.cluster]||0)+1});
+  let html=Object.entries(clusters).map(([k,v])=>{
+    if(!counts[k]) return '';
+    return `<div class="leg-item on" data-c="${k}">
+      <span class="leg-chk">✓</span>
+      <span class="leg-dot" style="background:${v.color}"></span>
+      ${v.label}
+      <span class="leg-count">${counts[k]}</span>
+    </div>`;
+  }).join('');
+  html+=`<div class="leg-all" id="leg-all">All ✓</div>`;
+  el.innerHTML=html;
+
+  el.querySelectorAll('.leg-item').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const c=btn.dataset.c;
+      if(activeClusters.has(c)){
+        activeClusters.delete(c);
+      } else {
+        activeClusters.add(c);
+      }
+      // If all selected, clear (= show all)
+      if(activeClusters.size>=Object.keys(clusters).length) activeClusters.clear();
+      refreshLegendUI();
+      updateVis();
+    });
+  });
+
+  document.getElementById('leg-all').addEventListener('click',()=>{
+    activeClusters.clear();
+    refreshLegendUI();
+    updateVis();
+  });
+}
+
+function refreshLegendUI(){
+  const el=document.getElementById('legend');
+  const allOn=activeClusters.size===0;
+  el.querySelectorAll('.leg-item').forEach(btn=>{
+    const c=btn.dataset.c;
+    const isOn=allOn||activeClusters.has(c);
+    btn.classList.toggle('on',isOn);
+    btn.classList.toggle('off',!isOn);
+    btn.querySelector('.leg-chk').textContent=isOn?'✓':'';
+  });
+  document.getElementById('leg-all').textContent=allOn?'All ✓':'Show All';
+}
+
+// ── Panel ──
+function openPanel(n){
+  const p=document.getElementById('pnl');
+  const c=clusters[n.cluster];
+  const reviewUrl=n.review_url||'https://papergoat.beehiiv.com/';
+
+  const parents=[], children=[];
+  DATA.edges.forEach(e=>{
+    if(e.source===n.id&&nodeMap[e.target]) children.push(nodeMap[e.target]);
+    if(e.target===n.id&&nodeMap[e.source]) parents.push(nodeMap[e.source]);
+  });
+  const peers=DATA.papers.filter(pp=>pp.cluster===n.cluster&&pp.id!==n.id)
+    .sort((a,b)=>b.score-a.score).slice(0,5);
+
+  let h='';
+
+  // ── Header ──
+  h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+    <span style="font-size:20px">${c.icon}</span>
+    <div>
+      <div style="font-size:10px;color:var(--muted)">${c.label} · #${n.rank} · ${n.year}</div>
+      <div class="pa" style="color:${c.color}">${n.alias}</div>
+    </div>
+  </div>`;
+  h+=`<div class="pt">${n.title}</div>`;
+
+  // ── Score bar ──
+  h+=`<div style="margin:6px 0 12px;display:flex;align-items:center;gap:8px">
+    <span class="ps" style="background:${c.color}">Score ${n.score}</span>
+    <div style="flex:1;height:3px;background:var(--glass-border);border-radius:2px;overflow:hidden">
+      <div style="width:${n.score}%;height:100%;background:${c.color};border-radius:2px"></div>
+    </div>
+  </div>`;
+
+  // ── 선정 이유 ──
+  h+=`<div class="preason">${rn(n)}</div>`;
+
+  // ── PaperGoat 리뷰 (CTA) ──
+  const isPlaceholder=reviewUrl==='https://papergoat.beehiiv.com/';
+  h+=`<div style="margin:16px 0;padding:14px 16px;background:linear-gradient(135deg,rgba(91,155,245,.12),rgba(139,92,246,.08));border:1px solid rgba(91,155,245,.25);border-radius:14px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-10px;right:-10px;font-size:40px;opacity:.06;pointer-events:none">🐐</div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <span style="font-size:16px">📝</span>
+      <span style="font-size:13px;font-weight:700;color:var(--accent)">${tr('panel.cta.title')}</span>
+    </div>
+    <p style="font-size:12px;color:var(--text);line-height:1.6;margin-bottom:10px;opacity:.85">${
+      isPlaceholder
+        ?`<strong>${n.alias}</strong>${tr('panel.cta.placeholderSuffix')}`
+        :`<strong>${n.alias}</strong>${tr('panel.cta.descSuffix')}`
+    }</p>
+    <a href="${reviewUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:${isPlaceholder?'var(--muted)':'var(--accent)'};color:#fff;border:none;padding:7px 16px;border-radius:8px;font-weight:600;font-size:12px;text-decoration:none;box-shadow:0 2px 8px ${isPlaceholder?'rgba(0,0,0,.15)':'rgba(91,155,245,.3)'};transition:transform .15s,box-shadow .15s;letter-spacing:-.2px" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">${isPlaceholder?tr('panel.cta.comingSoon'):tr('panel.cta.readReview')}</a>
+  </div>`;
+
+  // ── 한줄 소개 ──
+  if(n.one_liner) h+=`<div class="psec">${tr('panel.section.oneLiner')}</div><p style="font-size:13px;line-height:1.6;font-style:italic;opacity:.85">${n.one_liner}</p>`;
+
+  // ── 핵심 발견 ──
+  if(n.key_discoveries?.length){
+    h+=`<div class="psec">${tr('panel.section.keyDiscoveries')}</div><ul class="pdisc">`+n.key_discoveries.map(d=>`<li>${typeof d==='string'?d:JSON.stringify(d)}</li>`).join('')+`</ul>`;
+  }
+
+  // ── 카테고리 ──
+  h+=`<div class="psec">${tr('panel.section.category')}</div><div class="ptags">`+n.categories.map(x=>`<span class="ptag">#${x}</span>`).join('')+`</div>`;
+
+  // ── 연결 논문 ──
+  if(parents.length){
+    h+=`<div class="psec">${tr('panel.section.parents')}</div><div class="pconns">`+parents.map(cn=>{
+      const cc=clusters[cn.cluster]?.color||'#888';
+      return `<div class="pconn" data-id="${cn.id}"><span class="pcdot" style="background:${cc}"></span><strong>${cn.alias}</strong> <span style="opacity:.4">#${cn.rank} · ${cn.year}</span></div>`;
+    }).join('')+`</div>`;
+  }
+  if(children.length){
+    h+=`<div class="psec">${tr('panel.section.children')}</div><div class="pconns">`+children.map(cn=>{
+      const cc=clusters[cn.cluster]?.color||'#888';
+      return `<div class="pconn" data-id="${cn.id}"><span class="pcdot" style="background:${cc}"></span><strong>${cn.alias}</strong> <span style="opacity:.4">#${cn.rank} · ${cn.year}</span></div>`;
+    }).join('')+`</div>`;
+  }
+  if(peers.length){
+    h+=`<div class="psec">${tr('panel.section.peers')}</div><div class="pconns">`+peers.map(cn=>{
+      const cc=clusters[cn.cluster]?.color||'#888';
+      return `<div class="pconn" data-id="${cn.id}"><span class="pcdot" style="background:${cc}"></span>${cn.alias} <span style="opacity:.4">#${cn.rank}</span></div>`;
+    }).join('')+`</div>`;
+  }
+
+  // ── 외부 링크 ──
+  h+=`<div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--glass-border);display:flex;flex-wrap:wrap;gap:8px">`;
+  if(n.url) h+=`<a class="plink" href="${n.url}" target="_blank">${tr('panel.link.paper')}</a>`;
+  h+=`<a class="plink" href="${reviewUrl}" target="_blank">🐐 PaperGoat ↗</a>`;
+  h+=`</div>`;
+
+  h+=`<p style="font-size:9px;color:var(--muted);margin-top:10px;opacity:.4">${tr('panel.hint')}</p>`;
+
+  document.getElementById('pnl-c').innerHTML=h;
+  p.classList.add('open');
+  p.querySelectorAll('.pconn').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const t=nodeMap[el.dataset.id];
+      if(t){selected.clear();selected.add(t);hovered=t;openPanel(t)}
+    });
+    // Hover over connected-paper row → glow the referenced node in the 3D scene
+    el.addEventListener('mouseenter',()=>{
+      const t=nodeMap[el.dataset.id];
+      if(t) hovered=t;
+    });
+    el.addEventListener('mouseleave',()=>{
+      // Only clear if still highlighting this row's target (avoid race with 3D hover)
+      const t=nodeMap[el.dataset.id];
+      if(hovered===t) hovered=null;
+    });
+  });
+}
+function closePanel(){document.getElementById('pnl').classList.remove('open')}
+
+init();
+</script>
+</body>
+</html>
