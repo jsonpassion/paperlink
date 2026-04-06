@@ -14,6 +14,10 @@
   <a href="https://jsonpassion.github.io/papergoat-apple/">Live Demo (Apple ML)</a>
 </p>
 
+<p align="center">
+  <img src="assets/screenshot.png" alt="PaperLink Screenshot" width="720">
+</p>
+
 ---
 
 ## Features
