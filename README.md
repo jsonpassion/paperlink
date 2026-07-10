@@ -28,9 +28,11 @@
 - **3D Interactive Globe** — Papers as glowing nodes on a sphere, edges as curved lineage arcs
 - **Click & Explore** — Click any node for details, Shift+Click for multi-select
 - **Filter & Search** — Filter by category, year, score; full-text search
-- **Dark / Light Mode** — Automatic system preference detection
+- **Fully Brandable** — Logo, footer, promo link, and review CTA configured from `papers.json` (`site` block) — no HTML edits needed
+- **Dark / Light Mode** — Galaxy theme in dark, atom-lab theme in light; persisted per visitor
 - **Bilingual (EN/KR)** — Built-in i18n with one-click toggle
 - **Responsive** — Desktop, tablet, and mobile optimized
+- **Deep Links** — `?paper=<id>` opens a paper's detail panel directly; `?theme=` and `?lang=` overrides for sharing
 - **Single HTML** — No server, no build tools required for basic usage
 - **GitHub Pages Ready** — Deploy in 2 minutes
 
@@ -65,7 +67,35 @@ python -m http.server 8000
 
 ## Customizing Your Data
 
-### Step 1: Edit `papers.json`
+### Step 1: Brand it — the `site` block
+
+All branding lives in `papers.json` under `site`. No need to touch `index.html`:
+
+```json
+{
+  "site": {
+    "name": "PaperLink",
+    "logo": ["Paper", "Link"],
+    "tagline": "Research Paper Galaxy",
+    "link": { "label": "PaperLink on GitHub", "url": "https://github.com/you/your-repo" },
+    "footer": "© PaperLink 2026",
+    "footerLinks": [{ "label": "Your Name", "url": "https://..." }],
+    "cta": { "brand": "My Reviews", "url": "https://your-newsletter.com" }
+  }
+}
+```
+
+| Field | What it does |
+|-------|--------------|
+| `name` / `tagline` | Browser tab title (`name — tagline`) |
+| `logo` | Header wordmark: `["Paper", "Link"]` → second part gets the accent color |
+| `link` | Promo link shown in the Guide card (omit to hide) |
+| `footer` / `footerLinks` | Bottom-center credit line |
+| `cta` | Review call-to-action card in the detail panel (omit to hide entirely) |
+
+Every field is optional — sensible defaults apply.
+
+### Step 2: Edit `papers.json`
 
 Each paper needs these fields:
 
@@ -81,15 +111,19 @@ Each paper needs these fields:
   "categories": ["LLM", "Scaling"],
   "cluster": "llm",
   "reason": "Why this paper matters (shown in detail panel)",
+  "reason_en": "English version of reason",
+  "one_liner": "한줄 요약 (optional)",
+  "one_liner_en": "One-line TL;DR (optional)",
+  "key_discoveries": ["핵심 발견 1", "핵심 발견 2"],
+  "key_discoveries_en": ["Key finding 1", "Key finding 2"],
   "has_review": false,
-  "one_liner": "",
-  "key_discoveries": [],
-  "review_url": "",
-  "reason_en": "English version of reason"
+  "review_url": ""
 }
 ```
 
-### Step 2: Define Edges (Paper Lineage)
+Korean/English pairs (`reason`/`reason_en`, `one_liner`/`one_liner_en`, `key_discoveries`/`key_discoveries_en`) power the built-in language toggle — if one language is missing, the other is used as a fallback.
+
+### Step 3: Define Edges (Paper Lineage)
 
 Edges show relationships between papers:
 
@@ -101,21 +135,21 @@ Edges show relationships between papers:
 }
 ```
 
-### Step 3: Customize Clusters
+### Step 4: Customize Clusters
 
 Clusters define the color-coded categories. Customize them in the `clusters` section:
 
 ```json
 {
   "clusters": {
-    "llm":        {"label": "LLM",          "color": "#3b82f6", "icon": "🧠"},
-    "vision":     {"label": "Vision",       "color": "#10b981", "icon": "👁️"},
-    "generation": {"label": "Generation",   "color": "#f59e0b", "icon": "🎨"}
+    "llm":        {"label": "LLM",        "color": "#3b82f6"},
+    "vision":     {"label": "Vision",     "color": "#10b981"},
+    "generation": {"label": "Generation", "color": "#f59e0b"}
   }
 }
 ```
 
-### Step 4: Build for Production (Optional)
+### Step 5: Build for Production (Optional)
 
 To inline data into a single HTML file for deployment:
 
@@ -170,6 +204,14 @@ paperlink/
 | `Shift + Click` | Multi-select nodes |
 | `Scroll` | Zoom in/out |
 | `Drag` | Rotate globe |
+
+## URL Parameters
+
+| Param | Example | Effect |
+|-------|---------|--------|
+| `paper` | `?paper=1706.03762` | Opens that paper's detail panel on load |
+| `theme` | `?theme=light` | Forces light/dark theme |
+| `lang` | `?lang=en` | Forces language (`ko`/`en`) |
 
 ---
 
