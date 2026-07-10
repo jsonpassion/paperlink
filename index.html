@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#07080f" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#eef0f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#030407" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>PaperLink — Research Paper Galaxy</title>
@@ -23,25 +23,28 @@ window.__PG_I18N__={"ko":{"lang.toggleTitle":"Language","lang.toggleLabel":"KO",
 </script>
 <style>
 :root{
-  --bg:#07080f;
-  --glass:rgba(15,17,30,.55);
-  --glass-border:rgba(148,160,220,.13);
-  --glass-shine:rgba(255,255,255,.035);
-  --text:#eceef6;--muted:#9ba1bd;--faint:#666c85;
-  --accent:#7b9dff;
-  --accent-soft:rgba(123,157,255,.11);
-  --shadow:0 16px 48px rgba(2,4,12,.45),inset 0 1px 0 var(--glass-shine);
+  --bg:#030407;
+  --glass:rgba(9,10,16,.6);
+  --glass-border:rgba(196,186,162,.13);
+  --glass-shine:rgba(255,244,224,.04);
+  --text:#ece9e2;--muted:#a49f93;--faint:#6d685d;
+  --accent:#e8b465;
+  --accent-contrast:#241c0d;
+  --accent-soft:rgba(232,180,101,.10);
+  --shadow:0 16px 48px rgba(0,0,0,.55),inset 0 1px 0 var(--glass-shine);
   --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+  --display:ui-serif,'New York','Iowan Old Style',Georgia,'Times New Roman',serif;
 }
 .light{
-  --bg:#eef0f6;
-  --glass:rgba(255,255,255,.66);
-  --glass-border:rgba(70,80,120,.14);
-  --glass-shine:rgba(255,255,255,.6);
-  --text:#171a2b;--muted:#5d6379;--faint:#8d93a8;
-  --accent:#3056c8;
-  --accent-soft:rgba(48,86,200,.08);
-  --shadow:0 12px 36px rgba(23,26,43,.10),inset 0 1px 0 var(--glass-shine);
+  --bg:#f4f1ea;
+  --glass:rgba(255,253,248,.72);
+  --glass-border:rgba(90,80,60,.16);
+  --glass-shine:rgba(255,255,255,.65);
+  --text:#221f1a;--muted:#6b6559;--faint:#99927f;
+  --accent:#8a6520;
+  --accent-contrast:#fbf7ee;
+  --accent-soft:rgba(138,101,32,.09);
+  --shadow:0 12px 36px rgba(44,38,26,.10),inset 0 1px 0 var(--glass-shine);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{margin:0;padding:0;height:100%;background:var(--bg);overflow:hidden}
@@ -69,7 +72,7 @@ svg{display:block}
 /* ── Header ── */
 .hdr{position:fixed;top:0;left:0;right:0;padding:13px 20px;display:flex;align-items:center;gap:10px;z-index:10;pointer-events:none}
 .hdr>*{pointer-events:auto}
-.logo{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:750;letter-spacing:-.02em;margin-right:4px;user-select:none;cursor:default}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:16px;font-weight:700;letter-spacing:-.01em;margin-right:4px;user-select:none;cursor:default}
 .logo-mark{width:19px;height:19px;color:var(--accent);flex-shrink:0}
 .logo-accent{color:var(--accent)}
 .search-wrap{display:flex;align-items:center;gap:7px;padding:0 11px;border-radius:11px;width:232px;height:33px;transition:border-color .15s,box-shadow .15s}
@@ -98,7 +101,7 @@ svg{display:block}
 .tip{position:fixed;pointer-events:none;z-index:20;border-radius:14px;padding:13px 15px;max-width:300px;opacity:0;transform:translateY(6px) scale(.97);transition:opacity .15s,transform .15s}
 .tip.show{opacity:1;transform:none}
 .tip-rank{font-family:var(--mono);font-size:9.5px;color:var(--faint);letter-spacing:.05em}
-.tip-alias{font-size:16px;font-weight:750;margin:3px 0 2px;letter-spacing:-.01em}
+.tip-alias{font-family:var(--display);font-size:16.5px;font-weight:700;margin:3px 0 2px;letter-spacing:-.01em}
 .tip-title{font-size:11px;color:var(--muted);line-height:1.45;margin-bottom:7px}
 .tip-reason{font-size:12px;line-height:1.55}
 .tip-yr{font-family:var(--mono);font-size:9px;color:var(--accent);margin-top:8px;text-transform:uppercase;letter-spacing:.08em}
@@ -113,14 +116,14 @@ svg{display:block}
 .pey{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .pchip{font-size:9px;font-weight:750;letter-spacing:.09em;text-transform:uppercase;padding:3.5px 8px;border-radius:6px}
 .pey-meta{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.04em}
-.pa{font-size:23px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px;line-height:1.15}
+.pa{font-family:var(--display);font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px;line-height:1.18}
 .pt{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.45}
 .pscore{display:flex;align-items:center;gap:9px;margin:0 0 14px}
 .ps-n{font-family:var(--mono);font-size:15px;font-weight:700;line-height:1}
 .ps-cap{font-size:8.5px;font-weight:700;letter-spacing:.14em;color:var(--faint);text-transform:uppercase}
 .ps-bar{flex:1;height:3px;background:var(--glass-border);border-radius:2px;overflow:hidden}
 .ps-bar i{display:block;height:100%;border-radius:2px}
-.preason{font-size:13px;line-height:1.7;padding:11px 14px;background:var(--accent-soft);border-radius:12px}
+.preason{font-size:13px;line-height:1.7;padding:11px 14px;background:var(--accent-soft);border-left:2px solid var(--accent);border-radius:4px 12px 12px 4px}
 .psec{font-size:9.5px;font-weight:700;color:var(--faint);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.12em;display:flex;align-items:center;gap:8px}
 .psec::after{content:'';flex:1;height:1px;background:var(--glass-border)}
 .pol{font-size:13.5px;line-height:1.6}
@@ -138,7 +141,7 @@ svg{display:block}
 .pcta{margin:18px 0 2px;padding:14px 16px;border:1px solid var(--glass-border);border-left:3px solid var(--accent);border-radius:12px;background:var(--accent-soft)}
 .pcta-ey{font-size:9.5px;font-weight:750;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
 .pcta-txt{font-size:12.5px;line-height:1.6;margin-bottom:11px;opacity:.9}
-.pcta-btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;padding:7px 14px;border-radius:8px;font-weight:650;font-size:12px;text-decoration:none;transition:transform .15s;letter-spacing:-.01em}
+.pcta-btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:var(--accent-contrast);padding:7px 14px;border-radius:8px;font-weight:650;font-size:12px;text-decoration:none;transition:transform .15s;letter-spacing:-.01em}
 .pcta-btn:hover{transform:translateY(-1px)}
 .pcta-btn.soon{background:transparent;color:var(--muted)}
 .pcta-btn svg{width:11px;height:11px}
@@ -178,8 +181,8 @@ svg{display:block}
 .brand-link[hidden]{display:none}
 
 /* ── Node labels / stats / footer ── */
-.node-label{position:absolute;font-size:11px;color:#fff;pointer-events:none;white-space:nowrap;transform:translate(-50%,-100%);transition:opacity .2s;font-weight:600;letter-spacing:-.01em;background:rgba(8,9,18,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:2px 8px;border-radius:6px;border:1px solid rgba(120,130,180,.15)}
-.light .node-label{color:#171a2b;background:rgba(255,255,255,.6);border-color:rgba(70,80,120,.18);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.node-label{position:absolute;font-size:11px;color:#f4efe6;pointer-events:none;white-space:nowrap;transform:translate(-50%,-100%);transition:opacity .2s;font-weight:600;letter-spacing:-.01em;background:rgba(4,5,9,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:2px 8px;border-radius:6px;border:1px solid rgba(196,186,162,.14)}
+.light .node-label{color:#221f1a;background:rgba(255,253,248,.7);border-color:rgba(90,80,60,.2);box-shadow:0 1px 4px rgba(44,38,26,.07)}
 .stats{position:fixed;bottom:16px;right:16px;font-family:var(--mono);font-size:10px;color:var(--faint);z-index:10;letter-spacing:.06em}
 .hint{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted);z-index:10;opacity:.5;transition:opacity 1s}
 .foot{position:fixed;bottom:6px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--faint);opacity:.7;z-index:10;white-space:nowrap}
@@ -478,20 +481,43 @@ async function init(){
     });
     return new THREE.Points(geo,mat);
   }
-  // Far tiny stars
-  const stars1=makeStarLayer(2000, 0.01, 0.03, 0x4455aa, 100);
-  // Mid stars
-  const stars2=makeStarLayer(400, 0.03, 0.06, 0x6677cc, 60);
-  // Close bright stars (few)
-  const stars3=makeStarLayer(60, 0.05, 0.12, 0x99aaee, 40);
+  // Far tiny stars (cool white), mid stars (warm white), close bright stars (starlight gold)
+  const stars1=makeStarLayer(2000, 0.01, 0.03, 0x8a91b5, 100);
+  const stars2=makeStarLayer(400, 0.03, 0.06, 0xf2e8d8, 60);
+  const stars3=makeStarLayer(60, 0.05, 0.12, 0xffd9a3, 40);
   scene.add(stars1); scene.add(stars2); scene.add(stars3);
   starPoints={layers:[stars1,stars2,stars3]};
+
+  // Nebula clouds — soft additive sprites far behind the sphere (dark mode only)
+  function makeNebula(hex,size,pos,strength){
+    const cv=document.createElement('canvas');cv.width=cv.height=256;
+    const ctx=cv.getContext('2d');
+    const g=ctx.createRadialGradient(128,128,0,128,128,128);
+    g.addColorStop(0,hexRgba(hex,strength));
+    g.addColorStop(0.45,hexRgba(hex,strength*0.35));
+    g.addColorStop(1,hexRgba(hex,0));
+    ctx.fillStyle=g;ctx.fillRect(0,0,256,256);
+    const mat=new THREE.SpriteMaterial({
+      map:new THREE.CanvasTexture(cv),transparent:true,
+      blending:THREE.AdditiveBlending,depthWrite:false,
+    });
+    const sp=new THREE.Sprite(mat);
+    sp.scale.setScalar(size);
+    sp.position.set(pos[0],pos[1],pos[2]);
+    return sp;
+  }
+  nebulas=[
+    makeNebula('#6d5bd0',65,[-32,14,-48],0.16), // violet
+    makeNebula('#2e8f86',50,[36,-12,-52],0.13), // teal
+    makeNebula('#a34d6f',42,[10,26,-56],0.11),  // rose
+  ];
+  nebulas.forEach(n=>scene.add(n));
 
   // Atom theme: electron orbit rings (visible in light mode only)
   [RADIUS*0.7, RADIUS*1.0, RADIUS*1.3].forEach((r,i)=>{
     const geo=new THREE.RingGeometry(r-0.005, r+0.005, 80);
     const mat=new THREE.MeshBasicMaterial({
-      color:0x8899bb, transparent:true, opacity:0.3, side:THREE.DoubleSide
+      color:0x9a8f78, transparent:true, opacity:0.35, side:THREE.DoubleSide
     });
     const ring=new THREE.Mesh(geo,mat);
     // Tilt each ring differently
@@ -509,7 +535,7 @@ async function init(){
     const positions=new Float32Array(6); // 2 points = line
     geo.setAttribute('position',new THREE.BufferAttribute(positions,3));
     const mat=new THREE.LineBasicMaterial({
-      color:0x88aaff, transparent:true, opacity:0, linewidth:1
+      color:0xffe9c4, transparent:true, opacity:0, linewidth:1
     });
     const line=new THREE.Line(geo,mat);
     line.visible=false;
@@ -579,10 +605,10 @@ async function init(){
   setTimeout(()=>{document.getElementById('hint').style.opacity='0'},4000);
 }
 
-let starPoints, orbitRings=[];
+let starPoints, orbitRings=[], nebulas=[];
 function updateBg(){
   // Dark = Galaxy (deep space), Light = Atom (clean lab)
-  renderer.setClearColor(isDark?0x07080f:0xeef0f6);
+  renderer.setClearColor(isDark?0x030407:0xf4f1ea);
 
   // Bloom
   if(bloomPass){
@@ -594,20 +620,22 @@ function updateBg(){
   // Tone mapping
   if(renderer) renderer.toneMappingExposure=isDark?1.2:1.0;
 
-  // Stars (dark=galaxy) ↔ floating atoms (light=atom)
+  // Stars (dark=deep space) ↔ ink dots on paper (light=star atlas)
   if(starPoints?.layers){
-    const darkColors=[0x4455aa,0x6677cc,0x99aaee];
-    // Light: vivid atom particles — must contrast against white bg
-    const lightColors=[0x5577bb,0xcc6655,0x44aa77];
+    const darkColors=[0x8a91b5,0xf2e8d8,0xffd9a3];
+    const lightColors=[0x9a8a68,0x7a6f57,0xb09a70];
     starPoints.layers.forEach((l,i)=>{
       l.material.color.set(isDark?darkColors[i]:lightColors[i]);
-      l.material.opacity=isDark?0.8:0.6;
+      l.material.opacity=isDark?0.85:0.5;
       l.material.blending=isDark?THREE.AdditiveBlending:THREE.NormalBlending;
-      l.material.size=isDark?[0.03,0.06,0.12][i]:[0.06,0.1,0.18][i];
+      l.material.size=isDark?[0.03,0.06,0.12][i]:[0.05,0.09,0.15][i];
     });
   }
 
-  // Orbit rings: hidden in dark, visible in light (electron orbits)
+  // Nebula clouds: dark mode only
+  nebulas.forEach(n=>{ n.visible=isDark; });
+
+  // Orbit rings: hidden in dark, visible in light (atlas instrument lines)
   orbitRings.forEach(r=>{ r.visible=!isDark; });
 
   // Nodes
@@ -639,12 +667,13 @@ function updateBg(){
       if(!tube.userData) return;
       const isLineage=tube.userData.type==='lineage';
       if(isDark){
-        tube.material.color.set(isLineage?0x7799cc:0x556688);
-        tube._baseOpacity=isLineage?0.3:0.08;
+        // Constellation lines: pale silver-gold
+        tube.material.color.set(isLineage?0xbfb8a6:0x6a675f);
+        tube._baseOpacity=isLineage?0.28:0.08;
       } else {
-        // Atom: dark visible bonds on light bg
-        tube.material.color.set(isLineage?0x445577:0x667788);
-        tube._baseOpacity=isLineage?0.7:0.35;
+        // Atlas: sepia ink lines on paper
+        tube.material.color.set(isLineage?0x5a5445:0x827b6a);
+        tube._baseOpacity=isLineage?0.6:0.3;
         tube.material.blending=THREE.NormalBlending;
       }
     });
@@ -737,12 +766,12 @@ function buildEdges(){
     // High-density tessellation for smooth appearance at any zoom level
     const geo=new THREE.TubeGeometry(curve,128,tubeR,12,false);
     const mat=new THREE.MeshBasicMaterial({
-      color:isLineage?0x7799cc:0x556688,
-      transparent:true, opacity:isLineage?0.3:0.08,
+      color:isLineage?0xbfb8a6:0x6a675f,
+      transparent:true, opacity:isLineage?0.28:0.08,
     });
     const tube=new THREE.Mesh(geo,mat);
     tube.userData=e;
-    tube._baseOpacity=isLineage?0.3:0.08;
+    tube._baseOpacity=isLineage?0.28:0.08;
     tube.renderOrder=-1;          // draw edges before nodes
     mat.depthWrite=false;          // don't occlude nodes via depth
     edgeGroup.add(tube);
@@ -899,11 +928,11 @@ function animate(){
     tube.material.opacity+=(targetOp*Math.min(a1,a2)-tube.material.opacity)*0.1;
     if(srcSel||tgtSel){
       const selNode=[...selected].find(s=>s.id===e.source||s.id===e.target);
-      tube.material.color.set(selNode?clusters[selNode.cluster]?.color||'#7b9dff':'#7b9dff');
+      tube.material.color.set(selNode?clusters[selNode.cluster]?.color||'#e8b465':'#e8b465');
     } else if(srcHov||tgtHov){
-      tube.material.color.set(clusters[hovered.cluster]?.color||'#7b9dff');
+      tube.material.color.set(clusters[hovered.cluster]?.color||'#e8b465');
     } else {
-      tube.material.color.set(isDark?0x7799cc:0x445577);
+      tube.material.color.set(isDark?0xbfb8a6:0x5a5445);
     }
   });
 
@@ -1338,10 +1367,10 @@ function bindEvents(){
   function setTheme(dark){
     isDark=dark;
     document.body.classList.toggle('light',!isDark);
-    document.documentElement.style.background=isDark?'#07080f':'#eef0f6';
+    document.documentElement.style.background=isDark?'#030407':'#f4f1ea';
     themeBtn.innerHTML=isDark?ICON_MOON:ICON_SUN;
     // Update Safari bar color
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content',isDark?'#07080f':'#eef0f6');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content',isDark?'#030407':'#f4f1ea');
     updateBg();
   }
   let savedTheme=null;try{savedTheme=localStorage.getItem('pg-theme');}catch(e){}
